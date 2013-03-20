@@ -12,5 +12,10 @@
 *.la
 *.a
 
-#Intelsense VisualC++ file
+# VisualC++ files & folders
 *.sdf
+*.ipch
+*.tlog
+*.log
+Debug/
+Release/

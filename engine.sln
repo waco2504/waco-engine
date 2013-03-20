@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "engine_main", "engine_main\engine_main.vcxproj", "{3D913D5B-3C36-4956-AAFE-C25A766E5474}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "watki", "watki\watki.vcxproj", "{52957DE2-CB16-43DB-AABA-0CFA3B6CFBFB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XMLParser", "XMLParser\XMLParser.vcxproj", "{C6EA295C-1291-4BEE-9DB3-FD4DD46DBEBC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FileConvert", "FileConvert\FileConvert.vcxproj", "{5D7E084F-97E4-4905-A87E-C0C137E2476D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3D913D5B-3C36-4956-AAFE-C25A766E5474}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3D913D5B-3C36-4956-AAFE-C25A766E5474}.Debug|Win32.Build.0 = Debug|Win32
+		{3D913D5B-3C36-4956-AAFE-C25A766E5474}.Release|Win32.ActiveCfg = Release|Win32
+		{3D913D5B-3C36-4956-AAFE-C25A766E5474}.Release|Win32.Build.0 = Release|Win32
+		{52957DE2-CB16-43DB-AABA-0CFA3B6CFBFB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{52957DE2-CB16-43DB-AABA-0CFA3B6CFBFB}.Debug|Win32.Build.0 = Debug|Win32
+		{52957DE2-CB16-43DB-AABA-0CFA3B6CFBFB}.Release|Win32.ActiveCfg = Release|Win32
+		{52957DE2-CB16-43DB-AABA-0CFA3B6CFBFB}.Release|Win32.Build.0 = Release|Win32
+		{C6EA295C-1291-4BEE-9DB3-FD4DD46DBEBC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C6EA295C-1291-4BEE-9DB3-FD4DD46DBEBC}.Debug|Win32.Build.0 = Debug|Win32
+		{C6EA295C-1291-4BEE-9DB3-FD4DD46DBEBC}.Release|Win32.ActiveCfg = Release|Win32
+		{C6EA295C-1291-4BEE-9DB3-FD4DD46DBEBC}.Release|Win32.Build.0 = Release|Win32
+		{5D7E084F-97E4-4905-A87E-C0C137E2476D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5D7E084F-97E4-4905-A87E-C0C137E2476D}.Debug|Win32.Build.0 = Debug|Win32
+		{5D7E084F-97E4-4905-A87E-C0C137E2476D}.Release|Win32.ActiveCfg = Release|Win32
+		{5D7E084F-97E4-4905-A87E-C0C137E2476D}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
