@@ -1,0 +1,278 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 16.06.2010 14:44:38
+
+newmtl leaf
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka .\..\Debug\textures\sponza_thorn_diff.tif
+	map_Kd .\..\Debug\textures\sponza_thorn_diff.tif
+	map_d .\..\Debug\textures\sponza_thorn_mask.tif
+	map_bump .\..\Debug\textures\sponza_thorn_ddn.tif
+	bump .\..\Debug\textures\sponza_thorn_ddn.tif
+
+newmtl vase_round
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka .\..\Debug\textures\vase_round.tif
+	map_Kd .\..\Debug\textures\vase_round.tif
+	map_bump .\..\Debug\textures\vase_round_ddn.tif
+	bump .\..\Debug\textures\vase_round_ddn.tif
+
+newmtl Material__57
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka .\..\Debug\textures\vase_plant.tif
+	map_Kd .\..\Debug\textures\vase_plant.tif
+	map_d .\..\Debug\textures\vase_plant_mask.tif
+
+newmtl Material__25
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka .\..\Debug\textures\lion.tif
+	map_Kd .\..\Debug\textures\lion.tif
+	map_bump .\..\Debug\textures\lion_ddn.tif
+	bump .\..\Debug\textures\lion_ddn.tif
+
+newmtl Material__47
+	Kd 0.588000 0.588000 0.588000
+
+newmtl bricks
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 1.000000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka .\..\Debug\textures\spnza_bricks_a_diff.tif
+	map_Kd .\..\Debug\textures\spnza_bricks_a_diff.tif
+	map_Ks .\..\Debug\textures\spnza_bricks_a_spec.tif
+	map_bump .\..\Debug\textures\spnza_bricks_a_ddn.tif
+	bump .\..\Debug\textures\spnza_bricks_a_ddn.tif
+
+newmtl arch
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka .\..\Debug\textures\sponza_arch_diff.tif
+	map_Kd .\..\Debug\textures\sponza_arch_diff.tif
+
+newmtl ceiling
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka .\..\Debug\textures\sponza_ceiling_a_diff.tif
+	map_Kd .\..\Debug\textures\sponza_ceiling_a_diff.tif
+
+newmtl column_a
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka .\..\Debug\textures\sponza_column_a_diff.tif
+	map_Kd .\..\Debug\textures\sponza_column_a_diff.tif
+	map_bump .\..\Debug\textures\sponza_column_a_ddn.tif
+	bump .\..\Debug\textures\sponza_column_a_ddn.tif
+
+newmtl floor
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka .\..\Debug\textures\sponza_floor_a_diff.tif
+	map_Kd .\..\Debug\textures\sponza_floor_a_diff.tif
+	map_Ks .\..\Debug\textures\sponza_floor_a_spec.tif
+
+newmtl column_c
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka .\..\Debug\textures\sponza_column_c_diff.tif
+	map_Kd .\..\Debug\textures\sponza_column_c_diff.tif
+	map_bump .\..\Debug\textures\sponza_column_c_ddn.tif
+	bump .\..\Debug\textures\sponza_column_c_ddn.tif
+
+newmtl details
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka .\..\Debug\textures\sponza_details_diff.tif
+	map_Kd .\..\Debug\textures\sponza_details_diff.tif
+
+newmtl column_b
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka .\..\Debug\textures\sponza_column_b_diff.tif
+	map_Kd .\..\Debug\textures\sponza_column_b_diff.tif
+	map_bump .\..\Debug\textures\sponza_column_b_ddn.tif
+	bump .\..\Debug\textures\sponza_column_b_ddn.tif
+
+newmtl flagpole
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka .\..\Debug\textures\sponza_flagpole_diff.tif
+	map_Kd .\..\Debug\textures\sponza_flagpole_diff.tif
+
+newmtl fabric
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka .\..\Debug\textures\sponza_fabric_diff.tif
+	map_Kd .\..\Debug\textures\sponza_fabric_diff.tif
+
+newmtl chain
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka .\..\Debug\textures\chain_texture.tif
+	map_Kd .\..\Debug\textures\chain_texture.tif
+	map_d .\..\Debug\textures\chain_texture_mask.tif
+	map_bump .\..\Debug\textures\chain_texture_ddn.tif
+	bump .\..\Debug\textures\chain_texture_ddn.tif
+
+newmtl vase_hanging
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka .\..\Debug\textures\vase_hanging.tif
+	map_Kd .\..\Debug\textures\vase_hanging.tif
+
+newmtl vase
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka .\..\Debug\textures\vase_dif.tif
+	map_Kd .\..\Debug\textures\vase_dif.tif
+
+newmtl roof
+	Ns 10.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588000 0.588000 0.588000
+	Kd 0.588000 0.588000 0.588000
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka .\..\Debug\textures\sponza_roof_diff.tif
+	map_Kd .\..\Debug\textures\sponza_roof_diff.tif

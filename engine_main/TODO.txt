@@ -1,0 +1,18 @@
+- zastanowic sie na dodaniem depth prepassu
+
+- 6 passow jest wolniejsze od 1 pass dla cube shadow mapy... hmm... 
+
+- skybox jest krzywy jakis
+
+- directional lights (!)(!)
+-- miekkie cienie
+- miekkie cienie dla point lightow
+
+- resource menager dorobic pare rzeczy
+
+- bugi
+- destruktory uzupelnic
+- optamalizacje jest miejsca duzo w frustum cullingu, nie trzeba przeliczaæ co chwila 
+	niektorych rzeczy (minmaxValues)
+
+- gui
