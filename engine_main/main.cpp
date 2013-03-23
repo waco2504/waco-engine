@@ -8,7 +8,6 @@
 
 #include "Timer.hpp"
 
-#include <d3dx10.h>
 
 Window* g_win = NULL;
 InputSystemDX* g_insys = NULL;
@@ -62,7 +61,7 @@ int WINAPI wWinMain(HINSTANCE wInst, HINSTANCE, LPWSTR, int) {
 		g_ren->add(g_vscene[g_vscene.size()-1]);
 	}
 
-	float ang = 0.0f;
+	double ang = 0.0f;
 	while(g_win->isVisiable()) {
 		g_insys->AcquireKeyboard();
 		g_win->update();
@@ -97,7 +96,7 @@ int WINAPI wWinMain(HINSTANCE wInst, HINSTANCE, LPWSTR, int) {
 
 void init() {
 	g_cfg = new ConfigFile();
-	g_cfg->open(std::string(".//engine.cfg"));
+	if(g_cfg->open(std::string(".//engine.cfg"))) exit(1);
 
 	g_win = WindowFactory::getSingleton()->createWindow("EEngine", 
 		g_cfg->readConfigI("resolution-x"),

@@ -1,32 +1,47 @@
 #include "ResourceMenagerDX10.hpp"
 
+#include "BMP.hpp"
 #include "ErrorAssert.hpp"
 
-#include <d3dx10.h>
-
 /* Funkcja ³aduje texture z pliku i inicjalizuje dx resource */
-void ResourceMenagerDX10::loadTexture2DFromFile(const std::string& name,const char* fpath) {
+void ResourceMenagerDX10::loadTexture2DFromFile(const std::string& name, const char* fpath) {
+	BMPFILE bmp;
+
 	DXASSERT(data.find(name) != data.end());
-	
+	DXASSERT(BMPLoadBmpFromFile(&bmp, fpath));
+
+	D3D10_SUBRESOURCE_DATA texdata;
+	D3D10_TEXTURE2D_DESC desc;
+	ZeroMemory(&desc, sizeof(desc));
+	ZeroMemory(&texdata, sizeof(texdata));
+	desc.Width = bmp.width;
+	desc.Height = bmp.height;
+	desc.MipLevels = 1;
+	desc.ArraySize = 1;
+	desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	desc.SampleDesc.Count = 1;
+	desc.Usage = D3D10_USAGE_DEFAULT;
+	desc.BindFlags = D3D10_BIND_SHADER_RESOURCE;
+
+	DXASSERT(data.find(name) != data.end());
 	data[name];
 	ZeroMemory(&data[name], sizeof(RESOURCE));
-	HRESULT hr =  D3DX10CreateTextureFromFile(pd3dDevice, fpath, NULL, NULL,
- 		(ID3D10Resource**)&data[name].tex2d, NULL);
+
+	texdata.pSysMem = bmp.data;
+	texdata.SysMemPitch = bmp.width * 4;
+
+	DXASSERT(pd3dDevice->CreateTexture2D(&desc, &texdata, &data[name].tex2d));
 	
-	DXASSERT(hr);
-
-	D3D10_TEXTURE2D_DESC ltd;
-	data[name].tex2d->GetDesc(&ltd);
-
 	D3D10_SHADER_RESOURCE_VIEW_DESC srvd;
 	ZeroMemory(&srvd, sizeof(D3D10_SHADER_RESOURCE_VIEW_DESC));
-	srvd.Format = ltd.Format;
+	srvd.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	srvd.ViewDimension = D3D10_SRV_DIMENSION_TEXTURE2D;
-	srvd.Texture2D.MipLevels = ltd.MipLevels;
+	srvd.Texture2D.MipLevels = 1;
 
 	DXASSERT(pd3dDevice->CreateShaderResourceView
-			(data[name].tex2d, &srvd, &data[name].srv));
-
+		(data[name].tex2d, &srvd, &data[name].srv));
+	
+	delete [] bmp.data;
 }
 
 void ResourceMenagerDX10::createTexture2D(const std::string& name, UINT w, 
@@ -43,6 +58,7 @@ void ResourceMenagerDX10::createTexture2D(const std::string& name, UINT w,
 	desc.Usage = D3D10_USAGE_DEFAULT;
 	desc.BindFlags = bindFlags;
 
+	DXASSERT(data.find(name) != data.end());
 	data[name];
 	ZeroMemory(&data[name], sizeof(RESOURCE));
 

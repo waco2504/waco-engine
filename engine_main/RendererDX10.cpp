@@ -351,7 +351,7 @@ void RendererDX10::init(HWND hWnd, UINT clientWidth, UINT clientHeight, bool isF
 		1, DXGI_FORMAT_R32G32B32A32_FLOAT, 
 		D3D10_BIND_RENDER_TARGET|D3D10_BIND_SHADER_RESOURCE);
 	resMen->loadTexture2DFromFile(std::string("SSRndNormals"), 
-		"noise.png");
+		"noise.bmp");
 
 	setDefaultRenderDescreption();
 }

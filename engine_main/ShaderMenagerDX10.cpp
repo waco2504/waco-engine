@@ -4,8 +4,6 @@
 #include <string>
 #include <fstream>
 
-#include <d3dx10.h>
-
 	
 const D3D10_SHADER_MACRO M1[] = { "VINNORM", "1", "VINTAN", "1", "VINTEX1", "1", 
 	"PSCOLDEPTH", "1", NULL, NULL };
@@ -85,6 +83,24 @@ const D3D10_SHADER_MACRO* ShaderMacros[] = {
 };
 
 
+std::string ShaderMenagerDX10::readShaderFile(const char* path) {
+	std::string out;
+	std::ifstream file(path);
+
+	if(file.fail()) {
+		return out;
+	}
+
+	file.seekg(0, std::ios::end);   
+	out.reserve((unsigned int)file.tellg());
+	file.seekg(0, std::ios::beg); 
+
+	out.assign((std::istreambuf_iterator<char>(file)),
+				std::istreambuf_iterator<char>());
+
+	file.close();
+	return out;
+}
 
 void ShaderMenagerDX10::procCompilerOutput(HRESULT hr, ID3D10Blob* compilerErrors, 
 	const char* info) {
@@ -114,13 +130,19 @@ SHADERSETDX10 ShaderMenagerDX10::compileShaderSet(SHADERSETDX10::TYPE shaderType
 	HRESULT hr = 0;
 	ID3D10Blob* compilerErrors = NULL;
 	std::string info;
+	std::string sdata = readShaderFile(filePath);
 
 	ZeroMemory(&ret, sizeof(SHADERSETDX10));
 	ret.Type = shaderType;
 
-	hr = D3DX10CompileFromFile(filePath, macros, NULL, "VS",
-		"vs_4_0", D3D10_SHADER_OPTIMIZATION_LEVEL1|D3D10_SHADER_WARNINGS_ARE_ERRORS,
-		NULL, NULL, &pvertexShaderBlob, &compilerErrors, NULL);
+	hr = D3D10CompileShader(sdata.c_str(), sdata.length(), NULL, macros, NULL, "VS", "vs_4_0", 
+		D3D10_SHADER_OPTIMIZATION_LEVEL1|D3D10_SHADER_WARNINGS_ARE_ERRORS, &pvertexShaderBlob,
+		&compilerErrors);
+
+	// nie dzia³a, rzuca naruszeniem pamiêci
+	//hr = D3DCompile(sdata.c_str(), sdata.length(), NULL, macros, NULL, NULL, "vs_4_0", 
+	//	D3D10_SHADER_OPTIMIZATION_LEVEL1|D3D10_SHADER_WARNINGS_ARE_ERRORS, 0, &pvertexShaderBlob, 
+	//	&compilerErrors);
 
 	info.clear();
 	info += "D3DX10CompileFromFile vs_4_0 Macro: ";
@@ -133,9 +155,9 @@ SHADERSETDX10 ShaderMenagerDX10::compileShaderSet(SHADERSETDX10::TYPE shaderType
 	
 	
 	if(shaderType == SHADERSETDX10::SHADOWMAPCUBE || shaderType == SHADERSETDX10::BOXBLURCUBE) {
-		hr = D3DX10CompileFromFile(filePath, macros, NULL, "GS",
-			"gs_4_0", D3D10_SHADER_OPTIMIZATION_LEVEL1|D3D10_SHADER_WARNINGS_ARE_ERRORS,
-			NULL, NULL, &pgeometryShaderBlob, &compilerErrors, NULL);
+		D3D10CompileShader(sdata.c_str(), sdata.length(), NULL, macros, NULL, "GS", "gs_4_0", 
+			D3D10_SHADER_OPTIMIZATION_LEVEL1|D3D10_SHADER_WARNINGS_ARE_ERRORS, &pgeometryShaderBlob,
+			&compilerErrors);
 
 		info.clear();
 		info += "D3DX10CompileFromFile gs_4_0 Macro: ";
@@ -147,9 +169,9 @@ SHADERSETDX10 ShaderMenagerDX10::compileShaderSet(SHADERSETDX10::TYPE shaderType
 			pgeometryShaderBlob->GetBufferSize(), &ret.GeometryShader);
 	}
 
-	hr = D3DX10CompileFromFile(filePath, macros, NULL, "PS",
-		"ps_4_0", D3D10_SHADER_OPTIMIZATION_LEVEL1|D3D10_SHADER_WARNINGS_ARE_ERRORS,
-		NULL, NULL, &ppixelShaderBlob, &compilerErrors, NULL);
+	D3D10CompileShader(sdata.c_str(), sdata.length(), NULL, macros, NULL, "PS", "ps_4_0", 
+		D3D10_SHADER_OPTIMIZATION_LEVEL1|D3D10_SHADER_WARNINGS_ARE_ERRORS, &ppixelShaderBlob,
+		&compilerErrors);
 
 	info.clear();
 	info += "D3DX10CompileFromFile ps_4_0 Macro: ";

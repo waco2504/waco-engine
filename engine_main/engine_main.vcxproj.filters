@@ -16,9 +16,6 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{b2a9eeea-f964-45f1-af2c-0952fa61d1f5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\TEST">
-      <UniqueIdentifier>{17357ae4-f5c3-4e99-abce-eb168e9b6981}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\TEST">
       <UniqueIdentifier>{5bd0a382-0ed9-4e1a-b054-b0d15e20ad61}</UniqueIdentifier>
     </Filter>
@@ -72,6 +69,9 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BMP.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WindowFramework.cpp">
@@ -113,6 +113,9 @@
     <ClCompile Include="ConfigMenager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BMP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="TODO.txt" />
@@ -129,7 +132,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="noise.png">
+    <Image Include="noise.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

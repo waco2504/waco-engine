@@ -29,7 +29,7 @@ void Camera::updateProjMatrix() {
 }
 
 void Camera::updateFrustum() {
-	frustum.make(fOVA, viewPort.Width/viewPort.Height, zNear, zFar, pos, dir, up);
+	frustum.make(fOVA, (float)viewPort.Width/viewPort.Height, zNear, zFar, pos, dir, up);
 	
 	cubeFrustum[0].make(fOVA, 1.0f, zNear, zFar, pos, EVECTOR3(1.0f,0.0f,0.0f), EVECTOR3(0.0f,1.0f,0.0f));
 	cubeFrustum[1].make(fOVA, 1.0f, zNear, zFar, pos, EVECTOR3(-1.0f,0.0f,0.0f), EVECTOR3(0.0f,1.0f,0.0f));

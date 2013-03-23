@@ -12,11 +12,11 @@ newmtl leaf
 	Kd 0.588000 0.588000 0.588000
 	Ks 0.000000 0.000000 0.000000
 	Ke 0.000000 0.000000 0.000000
-	map_Ka ..\engine_main\textures\sponza_thorn_diff.tif
-	map_Kd ..\engine_main\textures\sponza_thorn_diff.tif
-	map_d ..\engine_main\textures\sponza_thorn_mask.tif
-	map_bump ..\engine_main\textures\sponza_thorn_ddn.tif
-	bump ..\engine_main\textures\sponza_thorn_ddn.tif
+	map_Ka ..\engine_main\textures\sponza_thorn_diff.bmp
+	map_Kd ..\engine_main\textures\sponza_thorn_diff.bmp
+	map_d ..\engine_main\textures\sponza_thorn_mask.bmp
+	map_bump ..\engine_main\textures\sponza_thorn_ddn.bmp
+	bump ..\engine_main\textures\sponza_thorn_ddn.bmp
 
 newmtl vase_round
 	Ns 10.000000
@@ -29,10 +29,10 @@ newmtl vase_round
 	Kd 0.588000 0.588000 0.588000
 	Ks 0.000000 0.000000 0.000000
 	Ke 0.000000 0.000000 0.000000
-	map_Ka ..\engine_main\textures\vase_round.tif
-	map_Kd ..\engine_main\textures\vase_round.tif
-	map_bump ..\engine_main\textures\vase_round_ddn.tif
-	bump ..\engine_main\textures\vase_round_ddn.tif
+	map_Ka ..\engine_main\textures\vase_round.bmp
+	map_Kd ..\engine_main\textures\vase_round.bmp
+	map_bump ..\engine_main\textures\vase_round_ddn.bmp
+	bump ..\engine_main\textures\vase_round_ddn.bmp
 
 newmtl Material__57
 	Ns 10.000000
@@ -45,9 +45,9 @@ newmtl Material__57
 	Kd 0.588000 0.588000 0.588000
 	Ks 0.000000 0.000000 0.000000
 	Ke 0.000000 0.000000 0.000000
-	map_Ka ..\engine_main\textures\vase_plant.tif
-	map_Kd ..\engine_main\textures\vase_plant.tif
-	map_d ..\engine_main\textures\vase_plant_mask.tif
+	map_Ka ..\engine_main\textures\vase_plant.bmp
+	map_Kd ..\engine_main\textures\vase_plant.bmp
+	map_d ..\engine_main\textures\vase_plant_mask.bmp
 
 newmtl Material__25
 	Ns 10.000000
@@ -60,10 +60,10 @@ newmtl Material__25
 	Kd 0.588000 0.588000 0.588000
 	Ks 0.000000 0.000000 0.000000
 	Ke 0.000000 0.000000 0.000000
-	map_Ka ..\engine_main\textures\lion.tif
-	map_Kd ..\engine_main\textures\lion.tif
-	map_bump ..\engine_main\textures\lion_ddn.tif
-	bump ..\engine_main\textures\lion_ddn.tif
+	map_Ka ..\engine_main\textures\lion.bmp
+	map_Kd ..\engine_main\textures\lion.bmp
+	map_bump ..\engine_main\textures\lion_ddn.bmp
+	bump ..\engine_main\textures\lion_ddn.bmp
 
 newmtl Material__47
 	Kd 0.588000 0.588000 0.588000
@@ -79,11 +79,11 @@ newmtl bricks
 	Kd 1.000000 0.588000 0.588000
 	Ks 0.000000 0.000000 0.000000
 	Ke 0.000000 0.000000 0.000000
-	map_Ka ..\engine_main\textures\spnza_bricks_a_diff.tif
-	map_Kd ..\engine_main\textures\spnza_bricks_a_diff.tif
-	map_Ks ..\engine_main\textures\spnza_bricks_a_spec.tif
-	map_bump ..\engine_main\textures\spnza_bricks_a_ddn.tif
-	bump ..\engine_main\textures\spnza_bricks_a_ddn.tif
+	map_Ka ..\engine_main\textures\spnza_bricks_a_diff.bmp
+	map_Kd ..\engine_main\textures\spnza_bricks_a_diff.bmp
+	map_Ks ..\engine_main\textures\spnza_bricks_a_spec.bmp
+	map_bump ..\engine_main\textures\spnza_bricks_a_ddn.bmp
+	bump ..\engine_main\textures\spnza_bricks_a_ddn.bmp
 
 newmtl arch
 	Ns 10.000000
@@ -96,8 +96,8 @@ newmtl arch
 	Kd 0.588000 0.588000 0.588000
 	Ks 0.000000 0.000000 0.000000
 	Ke 0.000000 0.000000 0.000000
-	map_Ka ..\engine_main\textures\sponza_arch_diff.tif
-	map_Kd ..\engine_main\textures\sponza_arch_diff.tif
+	map_Ka ..\engine_main\textures\sponza_arch_diff.bmp
+	map_Kd ..\engine_main\textures\sponza_arch_diff.bmp
 
 newmtl ceiling
 	Ns 10.000000
@@ -110,8 +110,8 @@ newmtl ceiling
 	Kd 0.588000 0.588000 0.588000
 	Ks 0.000000 0.000000 0.000000
 	Ke 0.000000 0.000000 0.000000
-	map_Ka ..\engine_main\textures\sponza_ceiling_a_diff.tif
-	map_Kd ..\engine_main\textures\sponza_ceiling_a_diff.tif
+	map_Ka ..\engine_main\textures\sponza_ceiling_a_diff.bmp
+	map_Kd ..\engine_main\textures\sponza_ceiling_a_diff.bmp
 
 newmtl column_a
 	Ns 10.000000
@@ -124,10 +124,10 @@ newmtl column_a
 	Kd 0.588000 0.588000 0.588000
 	Ks 0.000000 0.000000 0.000000
 	Ke 0.000000 0.000000 0.000000
-	map_Ka ..\engine_main\textures\sponza_column_a_diff.tif
-	map_Kd ..\engine_main\textures\sponza_column_a_diff.tif
-	map_bump ..\engine_main\textures\sponza_column_a_ddn.tif
-	bump ..\engine_main\textures\sponza_column_a_ddn.tif
+	map_Ka ..\engine_main\textures\sponza_column_a_diff.bmp
+	map_Kd ..\engine_main\textures\sponza_column_a_diff.bmp
+	map_bump ..\engine_main\textures\sponza_column_a_ddn.bmp
+	bump ..\engine_main\textures\sponza_column_a_ddn.bmp
 
 newmtl floor
 	Ns 10.000000
@@ -140,9 +140,9 @@ newmtl floor
 	Kd 0.588000 0.588000 0.588000
 	Ks 0.000000 0.000000 0.000000
 	Ke 0.000000 0.000000 0.000000
-	map_Ka ..\engine_main\textures\sponza_floor_a_diff.tif
-	map_Kd ..\engine_main\textures\sponza_floor_a_diff.tif
-	map_Ks ..\engine_main\textures\sponza_floor_a_spec.tif
+	map_Ka ..\engine_main\textures\sponza_floor_a_diff.bmp
+	map_Kd ..\engine_main\textures\sponza_floor_a_diff.bmp
+	map_Ks ..\engine_main\textures\sponza_floor_a_spec.bmp
 
 newmtl column_c
 	Ns 10.000000
@@ -155,10 +155,10 @@ newmtl column_c
 	Kd 0.588000 0.588000 0.588000
 	Ks 0.000000 0.000000 0.000000
 	Ke 0.000000 0.000000 0.000000
-	map_Ka ..\engine_main\textures\sponza_column_c_diff.tif
-	map_Kd ..\engine_main\textures\sponza_column_c_diff.tif
-	map_bump ..\engine_main\textures\sponza_column_c_ddn.tif
-	bump ..\engine_main\textures\sponza_column_c_ddn.tif
+	map_Ka ..\engine_main\textures\sponza_column_c_diff.bmp
+	map_Kd ..\engine_main\textures\sponza_column_c_diff.bmp
+	map_bump ..\engine_main\textures\sponza_column_c_ddn.bmp
+	bump ..\engine_main\textures\sponza_column_c_ddn.bmp
 
 newmtl details
 	Ns 10.000000
@@ -171,8 +171,8 @@ newmtl details
 	Kd 0.588000 0.588000 0.588000
 	Ks 0.000000 0.000000 0.000000
 	Ke 0.000000 0.000000 0.000000
-	map_Ka ..\engine_main\textures\sponza_details_diff.tif
-	map_Kd ..\engine_main\textures\sponza_details_diff.tif
+	map_Ka ..\engine_main\textures\sponza_details_diff.bmp
+	map_Kd ..\engine_main\textures\sponza_details_diff.bmp
 
 newmtl column_b
 	Ns 10.000000
@@ -185,10 +185,10 @@ newmtl column_b
 	Kd 0.588000 0.588000 0.588000
 	Ks 0.000000 0.000000 0.000000
 	Ke 0.000000 0.000000 0.000000
-	map_Ka ..\engine_main\textures\sponza_column_b_diff.tif
-	map_Kd ..\engine_main\textures\sponza_column_b_diff.tif
-	map_bump ..\engine_main\textures\sponza_column_b_ddn.tif
-	bump ..\engine_main\textures\sponza_column_b_ddn.tif
+	map_Ka ..\engine_main\textures\sponza_column_b_diff.bmp
+	map_Kd ..\engine_main\textures\sponza_column_b_diff.bmp
+	map_bump ..\engine_main\textures\sponza_column_b_ddn.bmp
+	bump ..\engine_main\textures\sponza_column_b_ddn.bmp
 
 newmtl flagpole
 	Ns 10.000000
@@ -201,8 +201,8 @@ newmtl flagpole
 	Kd 0.588000 0.588000 0.588000
 	Ks 0.000000 0.000000 0.000000
 	Ke 0.000000 0.000000 0.000000
-	map_Ka ..\engine_main\textures\sponza_flagpole_diff.tif
-	map_Kd ..\engine_main\textures\sponza_flagpole_diff.tif
+	map_Ka ..\engine_main\textures\sponza_flagpole_diff.bmp
+	map_Kd ..\engine_main\textures\sponza_flagpole_diff.bmp
 
 newmtl fabric
 	Ns 10.000000
@@ -215,8 +215,8 @@ newmtl fabric
 	Kd 0.588000 0.588000 0.588000
 	Ks 0.000000 0.000000 0.000000
 	Ke 0.000000 0.000000 0.000000
-	map_Ka ..\engine_main\textures\sponza_fabric_diff.tif
-	map_Kd ..\engine_main\textures\sponza_fabric_diff.tif
+	map_Ka ..\engine_main\textures\sponza_fabric_diff.bmp
+	map_Kd ..\engine_main\textures\sponza_fabric_diff.bmp
 
 newmtl chain
 	Ns 10.000000
@@ -229,11 +229,11 @@ newmtl chain
 	Kd 0.588000 0.588000 0.588000
 	Ks 0.000000 0.000000 0.000000
 	Ke 0.000000 0.000000 0.000000
-	map_Ka ..\engine_main\textures\chain_texture.tif
-	map_Kd ..\engine_main\textures\chain_texture.tif
-	map_d ..\engine_main\textures\chain_texture_mask.tif
-	map_bump ..\engine_main\textures\chain_texture_ddn.tif
-	bump ..\engine_main\textures\chain_texture_ddn.tif
+	map_Ka ..\engine_main\textures\chain_texture.bmp
+	map_Kd ..\engine_main\textures\chain_texture.bmp
+	map_d ..\engine_main\textures\chain_texture_mask.bmp
+	map_bump ..\engine_main\textures\chain_texture_ddn.bmp
+	bump ..\engine_main\textures\chain_texture_ddn.bmp
 
 newmtl vase_hanging
 	Ns 10.000000
@@ -246,8 +246,8 @@ newmtl vase_hanging
 	Kd 0.588000 0.588000 0.588000
 	Ks 0.000000 0.000000 0.000000
 	Ke 0.000000 0.000000 0.000000
-	map_Ka ..\engine_main\textures\vase_hanging.tif
-	map_Kd ..\engine_main\textures\vase_hanging.tif
+	map_Ka ..\engine_main\textures\vase_hanging.bmp
+	map_Kd ..\engine_main\textures\vase_hanging.bmp
 
 newmtl vase
 	Ns 10.000000
@@ -260,8 +260,8 @@ newmtl vase
 	Kd 0.588000 0.588000 0.588000
 	Ks 0.000000 0.000000 0.000000
 	Ke 0.000000 0.000000 0.000000
-	map_Ka ..\engine_main\textures\vase_dif.tif
-	map_Kd ..\engine_main\textures\vase_dif.tif
+	map_Ka ..\engine_main\textures\vase_dif.bmp
+	map_Kd ..\engine_main\textures\vase_dif.bmp
 
 newmtl roof
 	Ns 10.000000
@@ -274,5 +274,5 @@ newmtl roof
 	Kd 0.588000 0.588000 0.588000
 	Ks 0.000000 0.000000 0.000000
 	Ke 0.000000 0.000000 0.000000
-	map_Ka ..\engine_main\textures\sponza_roof_diff.tif
-	map_Kd ..\engine_main\textures\sponza_roof_diff.tif
+	map_Ka ..\engine_main\textures\sponza_roof_diff.bmp
+	map_Kd ..\engine_main\textures\sponza_roof_diff.bmp

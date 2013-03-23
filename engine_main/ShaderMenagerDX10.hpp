@@ -102,6 +102,7 @@ private:
 	std::map<SHADERSETDX10::TYPE, SHADERSETDX10> shaderSets;
 	SHADERSETDX10::TYPE activeShader;
 	
+	std::string readShaderFile(const char*);
 	void procCompilerOutput(HRESULT hr, ID3D10Blob* compilerErrors, 
 		const char* info);
 	SHADERSETDX10 compileShaderSet(SHADERSETDX10::TYPE shaderType, 
@@ -117,7 +118,7 @@ private:
 	void updateObjectBuffer();
 	void updateLightBuffer();
 	void updatePostProcessBuffer();
-	void updateSSAOBuffer();
+	void updateSSAOBuffer();	
 public:
 	void init();
 	

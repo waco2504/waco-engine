@@ -32,7 +32,7 @@ int ConfigFile::readConfigI(const char* name) {
 }
 
 float ConfigFile::readConfigF(std::string& name) {
-	return atof(file[name].c_str());
+	return (float)atof(file[name].c_str());
 }
 
 float ConfigFile::readConfigF(const char* name) {
