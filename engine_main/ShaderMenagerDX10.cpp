@@ -1,5 +1,5 @@
 #include "ShaderMenagerDX10.hpp"
-#include "DXErrorAssert.hpp"
+#include "ErrorAssert.hpp"
 
 #include <string>
 #include <fstream>

@@ -10,6 +10,8 @@
 class ResourceMenagerDX10 : public DXClass {
 public:
 	struct RESOURCE {
+		RESOURCE() : tex2d(NULL) {};
+
 		union {
 			ID3D10Texture2D* tex2d;
 			ID3D10Buffer* buf;
@@ -27,8 +29,6 @@ public:
 private:
 	std::map<std::string, RESOURCE> data;
 public:
-	// sprawdzac bo moze oplik zostal juz zaladowany jak tak to nie tworzyc nowego 
-	// resourca tylko cos jak alias, inna nazwa ale wskazuje na ten sam resource
 	void loadTexture2DFromFile(const std::string& name, const char* fpath);
 	void createTexture2D(const std::string& name, UINT width, UINT height, 
 		UINT genMips, DXGI_FORMAT format, int bindFlags);

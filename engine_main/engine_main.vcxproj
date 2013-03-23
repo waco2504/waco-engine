@@ -12,13 +12,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.hpp" />
-    <ClInclude Include="DXErrorAssert.hpp" />
+    <ClInclude Include="ConfigMenager.hpp" />
+    <ClInclude Include="ErrorAssert.hpp" />
     <ClInclude Include="DXClass.hpp" />
     <ClInclude Include="FactoryMeshDX10.hpp" />
     <ClInclude Include="InputSystemDX.hpp" />
     <ClInclude Include="Math.hpp" />
     <ClInclude Include="OBJLoader.hpp" />
     <ClInclude Include="RendererDX10.hpp" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceMenagerDX10.hpp" />
     <ClInclude Include="ShaderMenagerDX10.hpp" />
     <ClInclude Include="Singleton.hpp" />
@@ -28,6 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="ConfigMenager.cpp" />
     <ClCompile Include="FactoryMeshDX10.cpp" />
     <ClCompile Include="InputSystemDX.cpp" />
     <ClCompile Include="main.cpp" />
@@ -41,8 +44,20 @@
     <ClCompile Include="XMLParser.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Debug\data\shaders\shader.hlsl" />
+    <None Include="engine.cfg" />
     <None Include="TODO.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="shader.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="engine_main.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="noise.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3D913D5B-3C36-4956-AAFE-C25A766E5474}</ProjectGuid>

@@ -1,5 +1,5 @@
 #include "RendererDX10.hpp"
-#include "DXErrorAssert.hpp"
+#include "ErrorAssert.hpp"
 
 typedef MESHDX10::EVERTEX EVERTEX;
 
@@ -283,8 +283,8 @@ void RendererDX10::initSkyBox() {
 	}
 }
 
-void RendererDX10::init(HWND hWnd, UINT clientWidth, UINT clientHeight, 
-		bool isFullscreen) { 
+void RendererDX10::init(HWND hWnd, UINT clientWidth, UINT clientHeight, bool isFullscreen) { 
+	HRESULT hr = 0;
 	DXGI_SWAP_CHAIN_DESC scd;
     ZeroMemory(&scd, sizeof(scd));
 	scd.BufferCount = 1;
@@ -351,7 +351,7 @@ void RendererDX10::init(HWND hWnd, UINT clientWidth, UINT clientHeight,
 		1, DXGI_FORMAT_R32G32B32A32_FLOAT, 
 		D3D10_BIND_RENDER_TARGET|D3D10_BIND_SHADER_RESOURCE);
 	resMen->loadTexture2DFromFile(std::string("SSRndNormals"), 
-		".\\..\\Debug\\noise.png");
+		"noise.png");
 
 	setDefaultRenderDescreption();
 }

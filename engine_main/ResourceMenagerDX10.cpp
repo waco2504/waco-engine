@@ -1,12 +1,13 @@
 #include "ResourceMenagerDX10.hpp"
 
-#include "DXErrorAssert.hpp"
+#include "ErrorAssert.hpp"
 
 #include <d3dx10.h>
 
-void ResourceMenagerDX10::loadTexture2DFromFile(const std::string& name,
-	const char* fpath) {
-		
+/* Funkcja ³aduje texture z pliku i inicjalizuje dx resource */
+void ResourceMenagerDX10::loadTexture2DFromFile(const std::string& name,const char* fpath) {
+	DXASSERT(data.find(name) != data.end());
+	
 	data[name];
 	ZeroMemory(&data[name], sizeof(RESOURCE));
 	HRESULT hr =  D3DX10CreateTextureFromFile(pd3dDevice, fpath, NULL, NULL,
@@ -183,7 +184,6 @@ void ResourceMenagerDX10::createIndexBuffer(const std::string& name, UINT bytes,
 	DXASSERT(pd3dDevice->CreateBuffer(&desc, &memdata, &data[name].buf));
 }
 
-ResourceMenagerDX10::RESOURCE* ResourceMenagerDX10::getData
-	(const std::string& name) {
+ResourceMenagerDX10::RESOURCE* ResourceMenagerDX10::getData(const std::string& name) {
 	return &data[name];
 }

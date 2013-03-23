@@ -4,19 +4,18 @@
 #include "FactoryMeshDX10.hpp"
 #include "ShaderMenagerDX10.hpp"
 #include "Camera.hpp"
+#include "ConfigMenager.hpp"
 
 #include "Timer.hpp"
 
 #include <d3dx10.h>
-
-#define _WHIGHT 1080
-#define _WWIDTH 1920
 
 Window* g_win = NULL;
 InputSystemDX* g_insys = NULL;
 RendererDX10* g_ren = NULL;
 ResourceMenagerDX10* g_res = NULL;
 FactoryMeshDX10* g_fm = NULL;
+ConfigFile* g_cfg = NULL;
 
 CAMERADX10 renCam;
 Camera* cam = NULL;
@@ -87,7 +86,7 @@ int WINAPI wWinMain(HINSTANCE wInst, HINSTANCE, LPWSTR, int) {
 		timer.update();
 	}
 	g_insys->UnacquireKeyboard();
-
+	
 
 	for(unsigned int i = 0; i < g_vscene.size(); ++i) {
 		delete g_vscene[i];
@@ -97,12 +96,19 @@ int WINAPI wWinMain(HINSTANCE wInst, HINSTANCE, LPWSTR, int) {
 }
 
 void init() {
-	g_win = WindowFactory::getSingleton()->createWindow("EEngine", _WWIDTH,_WHIGHT);
-	
+	g_cfg = new ConfigFile();
+	g_cfg->open(std::string(".//engine.cfg"));
+
+	g_win = WindowFactory::getSingleton()->createWindow("EEngine", 
+		g_cfg->readConfigI("resolution-x"),
+		g_cfg->readConfigI("resolution-y"));
+
 	g_insys = new InputSystemDX(g_win->getWindowInfo().hWnd);
 
 	g_ren = new RendererDX10();
-	g_ren->init(g_win->getWindowInfo().hWnd, _WWIDTH, _WHIGHT, true);
+	g_ren->init(g_win->getWindowInfo().hWnd, 
+		g_cfg->readConfigI("resolution-x"),
+		g_cfg->readConfigI("resolution-y"), false);
 	
 	g_res = g_ren->getResourceMenager();
 
@@ -116,34 +122,32 @@ void init() {
 
 	renDesc.renderstate = RENDERDESCREPTION::APPLYLIGHT | 
 		RENDERDESCREPTION::APPLYSSAO | RENDERDESCREPTION::APPLYSKYBOX | 
-		RENDERDESCREPTION::APPLYONEPASSCUBESHADOWS;
+		RENDERDESCREPTION::APPLYONEPASSCUBESHADOWS | RENDERDESCREPTION::APPLYSHADOWS;
 	renDesc.shadowQuality = RENDERDESCREPTION::POINT;
 	renDesc.skyboxdist = 100.0f;
-	renDesc.skyboxEast = std::string("alpine_east");
-	renDesc.skyboxWest = std::string("alpine_west");
-	renDesc.skyboxNorth = std::string("alpine_north");
-	renDesc.skyboxSouth = std::string("alpine_south");
-	renDesc.skyboxTop = std::string("alpine_up");
-	renDesc.skyboxBottom = std::string("alpine_down");
+	renDesc.skyboxEast = std::string("east");
+	renDesc.skyboxWest = std::string("west");
+	renDesc.skyboxNorth = std::string("north");
+	renDesc.skyboxSouth = std::string("south");
+	renDesc.skyboxTop = std::string("up");
+	renDesc.skyboxBottom = std::string("down");
 }
 
 void loadScene() {
-	g_fm->loadMeshesFromOBJ(".\\..\\Debug\\Sponza.obj");
-	//g_fm->saveMeshesInMeshFile("C:\\Users\\waco\\Desktop\\engine\\Debug\\spmesh");
-	//if(!g_fm->loadMeshesFromMeshFile("C:\\Users\\waco\\Desktop\\engine\\Debug\\sponzamesh")) MessageBox(NULL, "FAILED", "", MB_OK);
+	g_fm->loadMeshesFromOBJ(g_cfg->readConfigS("model-sponza-path").c_str());
 	
 	g_res->loadTexture2DFromFile(renDesc.skyboxEast, 
-		".\\..\\Debug\\skybox\\alpine_east.bmp");
+		g_cfg->readConfigS("skybox-east-path").c_str());
 	g_res->loadTexture2DFromFile(renDesc.skyboxWest, 
-		".\\..\\Debug\\skybox\\alpine_west.bmp");
+		g_cfg->readConfigS("skybox-west-path").c_str());
 	g_res->loadTexture2DFromFile(renDesc.skyboxNorth, 
-		".\\..\\Debug\\skybox\\alpine_north.bmp");
+		g_cfg->readConfigS("skybox-north-path").c_str());
 	g_res->loadTexture2DFromFile(renDesc.skyboxSouth, 
-		".\\..\\Debug\\skybox\\alpine_south.bmp");
+		g_cfg->readConfigS("skybox-south-path").c_str());
 	g_res->loadTexture2DFromFile(renDesc.skyboxTop, 
-		".\\..\\Debug\\skybox\\alpine_up.bmp");
+		g_cfg->readConfigS("skybox-up-path").c_str());
 	g_res->loadTexture2DFromFile(renDesc.skyboxBottom, 
-		".\\..\\Debug\\skybox\\alpine_down.bmp");
+		g_cfg->readConfigS("skybox-down-path").c_str());
 
 	// swiatlo punktowe
 	unsigned int l1sms = 512;
