@@ -249,7 +249,7 @@ bool FactoryMeshDX10::loadMeshesFromMeshFile(const char* filePath) {
 
 	for(unsigned int i = 0; i < head.groupCount; ++i) {
 		std::string name(groups[i].gName);
-		strcpy(meshes[name].meshName, groups[i].gName);
+		strcpy_s(meshes[name].meshName, 32, groups[i].gName); 
 		meshes[name].pdxindexBuffer = resMen->getData(n1)->buf;
 		meshes[name].pdxvertexBuffer = resMen->getData(n2)->buf;
 		meshes[name].indexCount = head.indexCount;

@@ -300,9 +300,11 @@ void RendererDX10::init(HWND hWnd, UINT clientWidth, UINT clientHeight, bool isF
 	if(isFullscreen) scd.Windowed = false;
     else scd.Windowed = true;
 
-	DXASSERT(D3D10CreateDeviceAndSwapChain(NULL, D3D10_DRIVER_TYPE_HARDWARE, NULL, 
+	hr = D3D10CreateDeviceAndSwapChain(NULL, D3D10_DRIVER_TYPE_HARDWARE, NULL, 
 		D3D10_CREATE_DEVICE_SINGLETHREADED|D3D10_CREATE_DEVICE_DEBUG, 
-		D3D10_SDK_VERSION, &scd, &pswapChain, &pd3dDevice));
+		D3D10_SDK_VERSION, &scd, &pswapChain, &pd3dDevice);
+
+	DXASSERT(S_OK != hr);
 
 	resMen = new ResourceMenagerDX10();
 	resMen->setDxDevice(pd3dDevice);
@@ -710,7 +712,7 @@ void RendererDX10::renderBatches() {
 	for(unsigned int pi = 0; pi < batchPacks.size(); ++pi) {
 		pd3dDevice->OMSetRenderTargets(1, &batchPacks[pi].rtv, batchPacks[pi].dsv);
 		pd3dDevice->OMSetDepthStencilState(batchPacks[pi].depthState, 1);
-		pd3dDevice->OMSetBlendState(batchPacks[pi].blendState, NULL, 0xffffffff);
+		pd3dDevice->OMSetBlendState(batchPacks[pi].blendState, 0, 0xffffffff);
 		pd3dDevice->RSSetState(batchPacks[pi].resterState);
 		pd3dDevice->RSSetViewports(1, &batchPacks[pi].viewPort);
 
@@ -757,7 +759,7 @@ void RendererDX10::renderSSAO() {
 		shaderMen->onBeginFrame(SHADERSETDX10::SSAO);
 		pd3dDevice->RSSetState(presterStateSolidCullFront);
 		pd3dDevice->OMSetDepthStencilState(pdepthStencilStateOffOff, 0);
-		pd3dDevice->OMSetBlendState(NULL, NULL, 0xffffffff);
+		pd3dDevice->OMSetBlendState(NULL, 0, 0xffffffff);
 		shaderMen->onRender(SHADERSETDX10::SSAO);
 		unsigned int stride = sizeof(FSQVERTEX), offset = 0;
 		pd3dDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -791,7 +793,7 @@ void RendererDX10::postProcessBlur2D(UINT outWidth, UINT outHeight,
 	shaderMen->onBeginFrame(SHADERSETDX10::BOXBLUR);
 	pd3dDevice->RSSetState(presterStateSolidCullFront);
 	pd3dDevice->OMSetDepthStencilState(pdepthStencilStateOffOff, 0);
-	pd3dDevice->OMSetBlendState(NULL, NULL, 0xffffffff);
+	pd3dDevice->OMSetBlendState(NULL, 0, 0xffffffff);
 	shaderMen->onRender(SHADERSETDX10::BOXBLUR);
 	unsigned int stride = sizeof(FSQVERTEX), offset = 0;
 	pd3dDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -810,7 +812,7 @@ void RendererDX10::postProcessBlurCube(ID3D10ShaderResourceView* in,
 	shaderMen->onBeginFrame(SHADERSETDX10::BOXBLURCUBE);
 	pd3dDevice->RSSetState(presterStateSolidCullFront);
 	pd3dDevice->OMSetDepthStencilState(pdepthStencilStateOffOff, 0);
-	pd3dDevice->OMSetBlendState(NULL, NULL, 0xffffffff);
+	pd3dDevice->OMSetBlendState(NULL, 0, 0xffffffff);
 	shaderMen->onRender(SHADERSETDX10::BOXBLURCUBE);
 	unsigned int stride = sizeof(FSQVERTEX), offset = 0;
 	pd3dDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -826,7 +828,7 @@ void RendererDX10::finalMarge() {
 
 	pd3dDevice->RSSetState(presterStateSolidCullFront);
 	pd3dDevice->OMSetDepthStencilState(pdepthStencilStateOffOff, 0);
-	pd3dDevice->OMSetBlendState(NULL, NULL, 0xffffffff);
+	pd3dDevice->OMSetBlendState(NULL, 0, 0xffffffff);
 	
 	ID3D10ShaderResourceView* texs[] = {
 		resMen->getData(std::string("ColorRenderTarget"))->srv,

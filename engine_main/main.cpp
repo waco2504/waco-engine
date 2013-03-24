@@ -39,20 +39,12 @@ int WINAPI wWinMain(HINSTANCE wInst, HINSTANCE, LPWSTR, int) {
 	init();
 	loadScene();
 
-	
 	g_ren->add(&l2);
 	g_ren->add(&l1);
-
-	MATERIALDX10 defMat;
-	defMat.diffuseMap = NULL;
-	defMat.normalMap = NULL;
-	strcpy_s(defMat.matName, "default");
-	defMat.Kd = EVECTOR4(0.5f,0.3f,0.8f,1.0f);
 
 	for(unsigned int i = 0; i < g_fm->getLoadedBatchSize(); ++i) {
 		g_vscene.push_back(new RENDERABLE());
 		g_vscene.back()->Material = g_fm->getLoadedBatch(i).Material;
-		//g_vscene.back()->Material = &defMat;
 		g_vscene.back()->Mesh = g_fm->getLoadedBatch(i).Mesh;
 		g_vscene.back()->World.identity();
 		g_vscene.back()->World.rotateY(3.1415f*0.3f);
@@ -71,10 +63,6 @@ int WINAPI wWinMain(HINSTANCE wInst, HINSTANCE, LPWSTR, int) {
 		ang += timer.getMilliSeconds() * 0.00005 * 3.1415f; 
 		if(ang >= 6.283f) ang -= 6.283f;
 
-		//for(unsigned int i = 0; i < g_vscene.size(); ++i) {
-			//g_vscene[i]->World.identity();
-			//g_vscene[i]->World.rotateY(ang);
-		//}
 
 		timer.start();
 
@@ -91,6 +79,7 @@ int WINAPI wWinMain(HINSTANCE wInst, HINSTANCE, LPWSTR, int) {
 		delete g_vscene[i];
 	}
 
+	WindowFactory::getSingleton()->deleteWindow(g_win);
 	return 0;
 }
 
@@ -108,7 +97,7 @@ void init() {
 	g_ren->init(g_win->getWindowInfo().hWnd, 
 		g_cfg->readConfigI("resolution-x"),
 		g_cfg->readConfigI("resolution-y"), false);
-	
+
 	g_res = g_ren->getResourceMenager();
 
 	g_fm = new FactoryMeshDX10();
@@ -229,30 +218,6 @@ void updateCam() {
 	if(g_insys->isPressed(DIK_I)) cam->rotatePitch(-0.004f * t);
 	if(g_insys->isPressed(DIK_K)) cam->rotatePitch(0.004f * t);
 
-	//l2.Direction = cam->getDirection();
-	///l2.Frustum[0] = cam->getFrustum();
-	//l2.Position = cam->getPosition();
-	//l2.Proj = cam->getProjectionMatrix();
-	//l2.View[0] = cam->getViewMatrix();
-
-	/*if(g_insys->isPressed(DIK_UP)) {
-		l1.Position += EVECTOR4(0.0f,0.0f,0.4f*t,0.0f);
-	}
-	if(g_insys->isPressed(DIK_DOWN)) {
-		l1.Position += EVECTOR4(0.0f,0.0f,-0.4f*t,0.0f);
-	}
-	if(g_insys->isPressed(DIK_LEFT)) {
-		l1.Position += EVECTOR4(0.4f*t,0.0f,0.0f,0.0f);
-	}
-	if(g_insys->isPressed(DIK_RIGHT)) {
-		l1.Position += EVECTOR4(-0.4f*t,0.0f,0.0f,0.0f);
-	}
-	if(g_insys->isPressed(DIK_NUMPAD1)) {
-		l1.Position += EVECTOR4(0.0f,0.4f*t,0.0f,0.0f);
-	}
-	if(g_insys->isPressed(DIK_NUMPAD2)) {
-		l1.Position += EVECTOR4(0.0f,-0.4f*t,0.0f,0.0f);
-	}*/
 
 	if(g_insys->isPressed(DIK_F1) && counter <= 0.0f) { 
 		if(renDesc.renderstate & RENDERDESCREPTION::APPLYSSAO) 

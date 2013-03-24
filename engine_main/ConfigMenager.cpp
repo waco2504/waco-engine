@@ -14,6 +14,9 @@ int ConfigFile::open(std::string& filePath) {
 	while(!_file.eof()) {
 		std::getline(_file, buf);
 		
+		if(buf.length() <= 1 || buf.find(':') == std::string::npos) 
+			continue;
+		
 		buf.erase(remove_if(buf.begin(), buf.end(), isspace), buf.end());
 
 		file[buf.substr(0, buf.find_first_of(':'))] = buf.substr(buf.find_first_of(':')+1);

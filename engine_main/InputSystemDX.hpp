@@ -11,7 +11,7 @@
 class InputSystemDX {
 	IDirectInput8* pdiInterface;
 	LPDIRECTINPUTDEVICE8 pkeyboardDev;
-	char keybuf[256];
+	BYTE keybuf[256];
 
 	int convertToDIK(int key);
 public:

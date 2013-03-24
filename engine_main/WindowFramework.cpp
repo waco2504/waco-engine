@@ -2,8 +2,10 @@
 
 
 // Window
-Window::Window(const Window&) {
-
+Window::Window(const Window& w) {
+	this->winDesc.client_height = w.winDesc.client_height;
+	this->winDesc.client_width = w.winDesc.client_width;
+	this->winDesc.hWnd = w.winDesc.hWnd;
 }
 
 Window& Window::operator=(const Window&) {
@@ -11,7 +13,9 @@ Window& Window::operator=(const Window&) {
 }
 
 Window::Window() {
-
+	this->winDesc.client_height = 0;
+	this->winDesc.client_width = 0;
+	this->winDesc.hWnd = 0;
 }
 
 void Window::update() {
@@ -28,7 +32,10 @@ void Window::showWindow(bool _show) {
 }
 
 bool Window::isVisiable() {
-	return (bool)IsWindowVisible(winDesc.hWnd);
+	if(TRUE == IsWindowVisible(winDesc.hWnd)) {
+		return true;
+	}
+	return false;
 }
 
 const Window::WindowDescreption Window::getWindowInfo() {
@@ -89,7 +96,6 @@ Window* WindowFactory::createWindow(std::string _name, unsigned int _width, unsi
 
 	ShowWindow(newWindow->winDesc.hWnd,SW_SHOW);
 	UpdateWindow(newWindow->winDesc.hWnd);
-
 
 	return newWindow;
 }

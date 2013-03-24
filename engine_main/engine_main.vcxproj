@@ -55,12 +55,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </FxCompile>
   </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="engine_main.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="noise.bmp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3D913D5B-3C36-4956-AAFE-C25A766E5474}</ProjectGuid>
     <RootNamespace>engine_main</RootNamespace>
@@ -113,10 +107,11 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

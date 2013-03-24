@@ -27,8 +27,8 @@ InputSystemDX::~InputSystemDX() {
 }
 
 void InputSystemDX::refresh() {
-	RtlZeroMemory(keybuf,sizeof(keybuf));
-	pkeyboardDev->GetDeviceState(sizeof(keybuf),(LPVOID)&keybuf);
+	ZeroMemory(keybuf, sizeof(keybuf));
+	pkeyboardDev->GetDeviceState(sizeof(keybuf), (LPVOID)&keybuf);
 }
 
 bool InputSystemDX::isPressed(int _k) {

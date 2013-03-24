@@ -9,10 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Shaders">
       <UniqueIdentifier>{b2a9eeea-f964-45f1-af2c-0952fa61d1f5}</UniqueIdentifier>
     </Filter>
@@ -125,15 +121,5 @@
     <FxCompile Include="shader.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="engine_main.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="noise.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
   </ItemGroup>
 </Project>

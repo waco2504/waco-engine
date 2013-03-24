@@ -201,9 +201,10 @@ SHADERSETDX10 ShaderMenagerDX10::compileShaderSet(SHADERSETDX10::TYPE shaderType
 				D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0, }, 
 		};
 
-		DXASSERT(pd3dDevice->CreateInputLayout(desc, sizeof(desc)/sizeof(D3D10_INPUT_ELEMENT_DESC), 
+		hr = pd3dDevice->CreateInputLayout(desc, sizeof(desc)/sizeof(D3D10_INPUT_ELEMENT_DESC), 
 			pvertexShaderBlob->GetBufferPointer(),pvertexShaderBlob->GetBufferSize(), 
-			&ret.InputLayout));
+			&ret.InputLayout);
+		DXASSERT(S_OK != hr);
 	} 
 	else {
 		D3D10_INPUT_ELEMENT_DESC desc[] = {
@@ -213,16 +214,18 @@ SHADERSETDX10 ShaderMenagerDX10::compileShaderSet(SHADERSETDX10::TYPE shaderType
 				D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0, }, 
 		};
 
-		DXASSERT(pd3dDevice->CreateInputLayout(desc, 
+		hr = pd3dDevice->CreateInputLayout(desc, 
 			sizeof(desc)/sizeof(D3D10_INPUT_ELEMENT_DESC), 
 			pvertexShaderBlob->GetBufferPointer(),pvertexShaderBlob->GetBufferSize(), 
-			&ret.InputLayout));
+			&ret.InputLayout);
+		DXASSERT(S_OK != hr);
 	}
 
 	return ret;
 }
 
 void ShaderMenagerDX10::initConstantBuffers() {
+	HRESULT hr = S_OK;
 	D3D10_BUFFER_DESC cbDesc;
     cbDesc.ByteWidth = sizeof(OBJECT_CONST_BUFFER);
     cbDesc.Usage = D3D10_USAGE_DYNAMIC;
@@ -230,7 +233,8 @@ void ShaderMenagerDX10::initConstantBuffers() {
     cbDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
     cbDesc.MiscFlags = 0;
 
-    DXASSERT(pd3dDevice->CreateBuffer(&cbDesc, NULL, &ObjectConst));
+	hr = pd3dDevice->CreateBuffer(&cbDesc, NULL, &ObjectConst);
+    DXASSERT(S_OK != hr);
 
     cbDesc.ByteWidth = sizeof(WORLD_CONST_BUFFER);
     cbDesc.Usage = D3D10_USAGE_DYNAMIC;
@@ -238,7 +242,8 @@ void ShaderMenagerDX10::initConstantBuffers() {
     cbDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
     cbDesc.MiscFlags = 0;
 
-    DXASSERT(pd3dDevice->CreateBuffer(&cbDesc, NULL, &WorldConst));
+	hr = pd3dDevice->CreateBuffer(&cbDesc, NULL, &WorldConst);
+    DXASSERT(S_OK != hr);
 
 	cbDesc.ByteWidth = sizeof(LIGHT_CONST_BUFFER);
     cbDesc.Usage = D3D10_USAGE_DYNAMIC;
@@ -246,7 +251,8 @@ void ShaderMenagerDX10::initConstantBuffers() {
     cbDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
     cbDesc.MiscFlags = 0;
 
-    DXASSERT(pd3dDevice->CreateBuffer(&cbDesc, NULL, &LightConst));
+	hr = pd3dDevice->CreateBuffer(&cbDesc, NULL, &LightConst);
+    DXASSERT(S_OK != hr);
 
 	cbDesc.ByteWidth = sizeof(POSTPROCESS_CONST_BUFFER);
     cbDesc.Usage = D3D10_USAGE_DYNAMIC;
@@ -254,7 +260,8 @@ void ShaderMenagerDX10::initConstantBuffers() {
     cbDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
     cbDesc.MiscFlags = 0;
 
-    DXASSERT(pd3dDevice->CreateBuffer(&cbDesc, NULL, &PostProcessConst));
+	hr = pd3dDevice->CreateBuffer(&cbDesc, NULL, &PostProcessConst);
+    DXASSERT(S_OK != hr);
 
 	cbDesc.ByteWidth = sizeof(SSAO_CONST_BUFFER);
     cbDesc.Usage = D3D10_USAGE_DYNAMIC;
@@ -262,7 +269,8 @@ void ShaderMenagerDX10::initConstantBuffers() {
     cbDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
     cbDesc.MiscFlags = 0;
 
-    DXASSERT(pd3dDevice->CreateBuffer(&cbDesc, NULL, &SSAOBuffer));
+	hr = pd3dDevice->CreateBuffer(&cbDesc, NULL, &SSAOBuffer);
+    DXASSERT(S_OK != hr);
 
 	pd3dDevice->VSSetConstantBuffers(0, 1, &WorldConst);
 	pd3dDevice->VSSetConstantBuffers(1, 1, &ObjectConst);
