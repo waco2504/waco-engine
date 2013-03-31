@@ -201,26 +201,24 @@ void ShaderMenagerDX10::procCompilerOutput(HRESULT hr, ID3D10Blob* compilerError
 }
 
 SHADERSETDX10 ShaderMenagerDX10::compileShaderSet(SHADERSETDX10::TYPE shaderType, 
-	const char* filePath, const D3D10_SHADER_MACRO* macros) {
+												  const D3D10_SHADER_MACRO* macros) {
 	SHADERSETDX10 ret;
 	ID3D10Blob* pvertexShaderBlob = NULL;
 	ID3D10Blob* pgeometryShaderBlob = NULL;
 	ID3D10Blob* ppixelShaderBlob = NULL;
 	HRESULT hr = 0;
 	ID3D10Blob* compilerErrors = NULL;
-	std::string info("");
-	std::string sdata = readShaderFile(filePath);
 
 	ZeroMemory(&ret, sizeof(SHADERSETDX10));
 	ret.Type = shaderType;
 
-	hr = D3DCompile(sdata.c_str(), sdata.length(), NULL, macros, NULL, "VS", "vs_4_0", 
-		D3D10_SHADER_OPTIMIZATION_LEVEL1|D3D10_SHADER_WARNINGS_ARE_ERRORS, 0, &pvertexShaderBlob, 
+	hr = D3DCompile(uncompiledShader.c_str(), uncompiledShader.length(), 
+		NULL, macros, NULL, "VS", "vs_4_0", 
+		D3D10_SHADER_OPTIMIZATION_LEVEL1|D3D10_SHADER_WARNINGS_ARE_ERRORS, 
+		0, &pvertexShaderBlob, 
 		&compilerErrors);
-
-	info.clear();
-	info += "D3DX10CompileFromFile vs_4_0";
-	procCompilerOutput(hr, compilerErrors, info.c_str());
+	
+	procCompilerOutput(hr, compilerErrors, "D3DX10CompileFromFile vs_4_0");
 	compilerErrors = NULL;
 
 	pd3dDevice->CreateVertexShader(pvertexShaderBlob->GetBufferPointer(), 
@@ -228,30 +226,30 @@ SHADERSETDX10 ShaderMenagerDX10::compileShaderSet(SHADERSETDX10::TYPE shaderType
 	
 	
 	if(shaderType == SHADERSETDX10::SHADOWMAPCUBE || shaderType == SHADERSETDX10::BLURCUBE) {
-		hr = D3DCompile(sdata.c_str(), sdata.length(), NULL, macros, NULL, "GS", "gs_4_0", 
-			D3D10_SHADER_OPTIMIZATION_LEVEL1|D3D10_SHADER_WARNINGS_ARE_ERRORS, 0, &pgeometryShaderBlob, 
+		hr = D3DCompile(uncompiledShader.c_str(), uncompiledShader.length(), 
+			NULL, macros, NULL, "GS", "gs_4_0", 
+			D3D10_SHADER_OPTIMIZATION_LEVEL1|D3D10_SHADER_WARNINGS_ARE_ERRORS, 
+			0, &pgeometryShaderBlob, 
 			&compilerErrors);
 
-		info.clear();
-		info += "D3DX10CompileFromFile gs_4_0";
-		procCompilerOutput(hr, compilerErrors, info.c_str());
+		procCompilerOutput(hr, compilerErrors, "D3DX10CompileFromFile gs_4_0");
 		compilerErrors = NULL;
 	
 		pd3dDevice->CreateGeometryShader(pgeometryShaderBlob->GetBufferPointer(),
 			pgeometryShaderBlob->GetBufferSize(), &ret.GeometryShader);
 	}
-	hr = D3DCompile(sdata.c_str(), sdata.length(), NULL, macros, NULL, "PS", "ps_4_0", 
+
+	hr = D3DCompile(uncompiledShader.c_str(), uncompiledShader.length(), NULL, macros, NULL, "PS", "ps_4_0", 
 		D3D10_SHADER_OPTIMIZATION_LEVEL1|D3D10_SHADER_WARNINGS_ARE_ERRORS, 0, &ppixelShaderBlob, 
 		&compilerErrors);
 
-	info.clear();
-	info += "D3DX10CompileFromFile ps_4_0";
-	procCompilerOutput(hr, compilerErrors, info.c_str());
+	procCompilerOutput(hr, compilerErrors, "D3DX10CompileFromFile ps_4_0");
 	compilerErrors = NULL;
 
 	pd3dDevice->CreatePixelShader(ppixelShaderBlob->GetBufferPointer(),
 		ppixelShaderBlob->GetBufferSize(), &ret.PixelShader);
 	
+
 	D3D10_INPUT_ELEMENT_DESC desc[] = {
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, 
 		D3D10_INPUT_PER_VERTEX_DATA, 0, }, 
@@ -342,10 +340,11 @@ void ShaderMenagerDX10::initConstantBuffers() {
 
 void ShaderMenagerDX10::initShaders() {
 	unsigned int scount = sizeof(ShaderMacros)/sizeof(D3D10_SHADER_MACRO*);
+	uncompiledShader = readShaderFile(SHADERFILE);
 
 	for(unsigned int si = 0; si < scount; ++si) {
 		shaderSets[(SHADERSETDX10::TYPE)si] =
-			compileShaderSet((SHADERSETDX10::TYPE)si, SHADERFILE, ShaderMacros[si]);
+			compileShaderSet((SHADERSETDX10::TYPE)si, ShaderMacros[si]);
 	}
 }
 

@@ -186,17 +186,16 @@ class RendererDX10 : public DXClass {
 	void prepareColBatches();
 	void prepareLitBatches();
 	void prepareSSNormBatches();
+	void prepareSSAOBatches();
+	void prepareFinalMargeBatches();
 	void prepareBatches();
 	void renderBatches();
 
-	void renderSSAO();	
 	void postProcessBlur2D(UINT outWidth, UINT outHeight, 
 		ID3D10ShaderResourceView* in, ID3D10RenderTargetView* out);
 	// UWAGA narazie out musi miec rozmiar jak glowny RT
 	void postProcessBlurCube(ID3D10ShaderResourceView* in, 
 		ID3D10RenderTargetView* out);
-
-	void finalMarge();
 
 	const std::string getUniqueName();
 	const std::string getShadowMapName(bool isCube, unsigned int smsize);

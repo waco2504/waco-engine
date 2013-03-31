@@ -9,7 +9,9 @@
 #include "DXClass.hpp"
 #include "Math.hpp"
 
+#ifndef SHADERFILE
 #define SHADERFILE "..\\engine-main\\shader.hlsl"
+#endif
 
 struct SHADERSETDX10 {
 	enum TYPE : int { //  do indeksowania shadermecros
@@ -42,7 +44,7 @@ struct SHADERSETDX10 {
 		SPOTLIGHTSPECBUMPSHADOW,
 	};
 	TYPE Type;
-	ID3D10SamplerState* samplerState;
+	ID3D10SamplerState* SamplerState;
 	ID3D10InputLayout* InputLayout;
 	ID3D10VertexShader* VertexShader;	
 	ID3D10GeometryShader* GeometryShader;	
@@ -108,6 +110,7 @@ private:
 
 	std::vector<ID3D10ShaderResourceView*> activeTextures;
 	
+	std::string uncompiledShader;
 	std::map<SHADERSETDX10::TYPE, SHADERSETDX10> shaderSets;
 	SHADERSETDX10::TYPE activeShader;
 	
@@ -115,7 +118,7 @@ private:
 	void procCompilerOutput(HRESULT hr, ID3D10Blob* compilerErrors, 
 		const char* info);
 	SHADERSETDX10 compileShaderSet(SHADERSETDX10::TYPE shaderType, 
-		const char* filePath, const D3D10_SHADER_MACRO* macros);
+		const D3D10_SHADER_MACRO* macros);
 	//SHADERSETDX10 loadPrecompiledShaderSet(SHADERSETDX10::TYPE shaderType);
 
 	void initConstantBuffers();

@@ -1,15 +1,15 @@
-- (!!) zarzadzanie samplerami, gdzie ej dac, w renderer razem z resterstate, czy w shgadermenager razem z typami teksow? (shadermen)
+- (!!) zarzadzanie samplerami, dodac opis do shaderset
+-- x tekstur x samplerow, kazdy sampler odpowiednio przyp[isany do slotu, 
+	tak jak trzeba, zaelzenie od shadersetu
 
 - hardwareowy multisampling textur;
-
 - multisampling shadow map;
 - VSM naprawic;
-- caly rendering na batchach (SSAO, finalMarge);
-- shadermenager: czytanie tego samego pliku z shaderem 
-	tysiac razy jest zle
+
+- wlasne formaty MESHY, zapisac skompilowane shadery
+
+- czy SSAO blurowac? teraz wyglada fajnie
 - rendering bez modeli z samym skyboxem, dziwnie sie rusza, az tyle FPS?
 - moje wlasne typy plikow meshy nie dzialaja, ale kod jakis jest
 - wywalenie polyskliwosc do constant buffera
 - HDR, tuning swiatel, jakos dziwnie to swieci
-
-- shadowmaping dla point lightu dziwny, jakby wypadalo poza SM

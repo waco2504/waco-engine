@@ -777,12 +777,68 @@ void RendererDX10::prepareSSNormBatches() {
 	batchPacks.push_back(pack);
 }
 
+void RendererDX10::prepareSSAOBatches() {
+	RENDERBATCH batch;
+	RENDERBATCHPACK pack;
+	for(unsigned int i = 0; i < MAXRENDERBATCHSRV; ++i) 
+		batch.srvs[i] = NULL;
+	
+
+	if(!(renderDesc.renderstate & RENDERDESCREPTION::APPLYSSAO)) {
+		float cc[] = {1.0f,1.0f,1.0f,1.0f};
+		pd3dDevice->ClearRenderTargetView(resMen->getData(std::string("AORenderTarget"))->rtv, cc); 
+	}
+	else {
+		batch.shaderType = SHADERSETDX10::SSAO;
+		batch.mesh = &fullScreenQuad;
+		batch.srvs[0] = resMen->getData(std::string("SSNormals"))->srv;
+		batch.srvs[1] = resMen->getData(std::string("SSRndNormals"))->srv;
+
+		pack.rtv = resMen->getData(std::string("AORenderTarget"))->rtv;
+		pack.dsv = NULL;
+		pack.blendState = NULL;
+		pack.depthState = pdepthStencilStateOffOff;
+		pack.resterState = presterStateSolidCullFront;
+		pack.viewPort = curCam.ViewPort;
+		pack.batches.clear();
+		pack.batches.push_back(batch);
+
+		batchPacks.push_back(pack);
+	}
+}
+
+void RendererDX10::prepareFinalMargeBatches() {
+	RENDERBATCH batch;
+	RENDERBATCHPACK pack;
+	for(unsigned int i = 0; i < MAXRENDERBATCHSRV; ++i) 
+		batch.srvs[i] = NULL;
+
+	batch.shaderType = SHADERSETDX10::FINALMERGE;
+	batch.mesh = &fullScreenQuad;
+	batch.srvs[0] = resMen->getData(std::string("ColorRenderTarget"))->srv;
+	batch.srvs[1] = resMen->getData(std::string("LightRenderTarget"))->srv;
+	batch.srvs[2] = resMen->getData(std::string("AORenderTarget"))->srv;
+
+	pack.rtv = pbbRT;
+	pack.dsv = NULL;
+	pack.blendState = NULL;
+	pack.depthState = pdepthStencilStateOffOff;
+	pack.resterState = presterStateSolidCullFront;
+	pack.viewPort = curCam.ViewPort;
+	pack.batches.clear();
+	pack.batches.push_back(batch);
+
+	batchPacks.push_back(pack);
+}
+
 void RendererDX10::prepareBatches() {
 	batchPacks.clear();
 	prepareColBatches();
 	prepareSMBatches();
 	prepareLitBatches();
 	prepareSSNormBatches();
+	prepareSSAOBatches();
+	prepareFinalMargeBatches();
 }
 
 void RendererDX10::renderBatches() {
@@ -820,43 +876,6 @@ void RendererDX10::renderBatches() {
 
 			shaderMen->onEndFrame();
 		}
-	}
-}
-
-void RendererDX10::renderSSAO() {
-	pd3dDevice->OMSetRenderTargets(1, 
-		&resMen->getData(std::string("AORenderTarget"))->rtv, NULL);
-
-	if(!(renderDesc.renderstate & RENDERDESCREPTION::APPLYSSAO)) {
-		float cc[] = {1.0f,1.0f,1.0f,1.0f};
-		pd3dDevice->ClearRenderTargetView(resMen->getData(std::string("AORenderTarget"))->rtv, cc); 
-	} else {	
-		ID3D10ShaderResourceView* srvs[] = { resMen->getData(std::string("SSNormals"))->srv, 
-			resMen->getData(std::string("SSRndNormals"))->srv };
-
-		shaderMen->setTextureSRV(2, srvs);
-
-		shaderMen->onBeginFrame(SHADERSETDX10::SSAO);
-		pd3dDevice->RSSetState(presterStateSolidCullFront);
-		pd3dDevice->OMSetDepthStencilState(pdepthStencilStateOffOff, 0);
-		pd3dDevice->OMSetBlendState(NULL, 0, 0xffffffff);
-		shaderMen->onRender(SHADERSETDX10::SSAO);
-		unsigned int stride = sizeof(EVERTEX), offset = 0;
-		pd3dDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		pd3dDevice->IASetVertexBuffers(0,1,&resMen->getData(std::string("FullScreenQuadVB"))->buf, 
-			&stride, &offset);
-		pd3dDevice->Draw(6, 0);
-		shaderMen->onEndFrame();
-
-		postProcessBlur2D(curCam.ViewPort.Width/2, 
-			curCam.ViewPort.Height/2,
-			resMen->getData(std::string("AORenderTarget"))->srv, 
-			resMen->getData(std::string("AORenderTarget2"))->rtv);
-	
-		postProcessBlur2D(curCam.ViewPort.Width, 
-			curCam.ViewPort.Height,
-			resMen->getData(std::string("AORenderTarget2"))->srv, 
-			resMen->getData(std::string("AORenderTarget"))->rtv);
 	}
 }
 
@@ -902,32 +921,6 @@ void RendererDX10::postProcessBlurCube(ID3D10ShaderResourceView* in,
 	shaderMen->onEndFrame();
 }
 
-void RendererDX10::finalMarge() {	
-	pd3dDevice->OMSetRenderTargets(1, &pbbRT, NULL);
-	pd3dDevice->RSSetViewports(1, &curCam.ViewPort);
-
-	pd3dDevice->RSSetState(presterStateSolidCullFront);
-	pd3dDevice->OMSetDepthStencilState(pdepthStencilStateOffOff, 0);
-	pd3dDevice->OMSetBlendState(NULL, 0, 0xffffffff);
-	
-	ID3D10ShaderResourceView* texs[] = {
-		resMen->getData(std::string("ColorRenderTarget"))->srv, 
-		resMen->getData(std::string("LightRenderTarget"))->srv,
-		resMen->getData(std::string("AORenderTarget"))->srv,
-	};
-	
-	shaderMen->setTextureSRV(3, texs);
-
-	shaderMen->onBeginFrame(SHADERSETDX10::FINALMERGE);
-	shaderMen->onRender(SHADERSETDX10::FINALMERGE);
-	unsigned int stride = sizeof(EVERTEX), offset = 0;
-	pd3dDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	pd3dDevice->IASetVertexBuffers(0,1,&resMen->getData
-		(std::string("FullScreenQuadVB"))->buf, &stride, &offset);
-	pd3dDevice->Draw(6, 0);
-	shaderMen->onEndFrame();
-}
-
 const std::string RendererDX10::getUniqueName() {
 	static int seed = 0;
 	std::string ret("RT");
@@ -952,10 +945,6 @@ const std::string RendererDX10::getShadowMapName(bool isCube, unsigned int smsiz
 void RendererDX10::render() {
 	prepareBatches();
 	renderBatches();
-	renderSSAO();
-
-	finalMarge();
-	
 	pswapChain->Present(0,0);
 }
 
