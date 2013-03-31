@@ -21,8 +21,8 @@ public:
 	bool loadMeshesFromOBJ(std::string& filePath);
 	bool loadMeshesFromMeshFile(std::string& filePath);
 	bool convertOBJToMeshFile(std::string& inFile, std::string& outFile);
-	MESHDX10* getMesh(const char* meshName);
-	MATERIALDX10* getMaterial(const char* matName);
+	MESHDX10* getMesh(std::string& meshName);
+	MATERIALDX10* getMaterial(std::string& matName);
 	unsigned int getLoadedBatchSize();
 	RENDERABLE getLoadedBatch(unsigned int i);
 };

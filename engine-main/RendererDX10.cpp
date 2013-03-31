@@ -8,11 +8,10 @@ bool operator==(const RENDERABLE& l, const RENDERABLE& r) {
 }
 
 bool operator==(const LIGHTDX10& l, const LIGHTDX10& r) {
-	return strcmp(l.lightName, r.lightName) == 0;
+	return l.lightName == r.lightName;
 }
 
 bool operator==(const RENDERBATCH& l, const RENDERBATCH& r) {
-	bool isserve = false;
 	bool ret = l.shaderType == r.shaderType && l.world == r.world  
 		&& l.mesh == r.mesh && l.light == r.light;
 	
@@ -607,6 +606,7 @@ void RendererDX10::prepareLitBatches() {
 	RENDERBATCHPACK pack;
 	int lt = 0;
 	bool bump = false;
+	bool spec = false;
 	bool shadow = false;
 	float col[] = {0.0f,0.0f,0.0f,0.0f};
 
@@ -635,7 +635,7 @@ void RendererDX10::prepareLitBatches() {
 			batch.view[i] = curCam.ViewMatrix;
 
 		for(unsigned int oi = 0; oi < visibleScene.size(); ++oi) {
-			lt = 0; shadow = false; bump = false;
+			lt = 0; shadow = false; bump = false; spec = false;
 			for(unsigned int i = 0; i < MAXRENDERBATCHSRV; ++i) 
 				batch.srvs[i] = NULL;
 			
@@ -648,48 +648,83 @@ void RendererDX10::prepareLitBatches() {
 					shadow = true;
 			if(fullScene[visibleScene[oi]]->Material->normalMap != NULL)
 				bump = true;
+			if(fullScene[visibleScene[oi]]->Material->specularMap != NULL) 
+				spec = true;
 
 			// point lighty
-			if(lt == 1 && shadow && bump) {
+			if(lt == 1 && shadow && bump && spec) {
+				batch.shaderType = SHADERSETDX10::POINTLIGHTSPECBUMPSHADOW;
+				batch.srvs[0] = fullScene[visibleScene[oi]]->Material->specularMap;
+				batch.srvs[1] = fullScene[visibleScene[oi]]->Material->normalMap;
+				batch.srvs[2] = lights[li]->pShadowMapSRV;
+			}
+			else if(lt == 1 && !shadow && bump && spec) {
+				batch.shaderType = SHADERSETDX10::POINTLIGHTSPECBUMP;
+				batch.srvs[0] = fullScene[visibleScene[oi]]->Material->specularMap;
+				batch.srvs[1] = fullScene[visibleScene[oi]]->Material->normalMap;
+			}
+			else if(lt == 1 && shadow && !bump && spec) {
+				batch.shaderType = SHADERSETDX10::POINTLIGHTSPECSHADOW;
+				batch.srvs[0] = fullScene[visibleScene[oi]]->Material->specularMap;
+				batch.srvs[1] = lights[li]->pShadowMapSRV;
+			}
+			else if(lt == 1 && !shadow && !bump && spec) {
+				batch.shaderType = SHADERSETDX10::POINTLIGHTSPEC;
+				batch.srvs[0] = fullScene[visibleScene[oi]]->Material->specularMap;
+			}
+			else if(lt == 1 && shadow && bump && !spec) {
 				batch.shaderType = SHADERSETDX10::POINTLIGHTBUMPSHADOW;
 				batch.srvs[0] = fullScene[visibleScene[oi]]->Material->normalMap;
 				batch.srvs[1] = lights[li]->pShadowMapSRV;
 			}
-			else if(lt == 1 && !shadow && bump) {
+			else if(lt == 1 && !shadow && bump && !spec) {
 				batch.shaderType = SHADERSETDX10::POINTLIGHTBUMP;
 				batch.srvs[0] = fullScene[visibleScene[oi]]->Material->normalMap;
-				batch.srvs[1] = NULL;
 			}
-			else if(lt == 1 && shadow && !bump) {
+			else if(lt == 1 && shadow && !bump && !spec) {
 				batch.shaderType = SHADERSETDX10::POINTLIGHTSHADOW;
 				batch.srvs[0] = lights[li]->pShadowMapSRV;
-				batch.srvs[1] = NULL;
 			}
-			else if(lt == 1 && !shadow && !bump) {
+			else if(lt == 1 && !shadow && !bump && !spec) {
 				batch.shaderType = SHADERSETDX10::POINTLIGHT;
-				batch.srvs[0] = NULL;
-				batch.srvs[1] = NULL;
 			}
+
 			// spot lighty
-			else if(lt == 2 && shadow && bump) {
+			if(lt == 2 && shadow && bump && spec) {
+				batch.shaderType = SHADERSETDX10::SPOTLIGHTSPECBUMPSHADOW;
+				batch.srvs[0] = lights[li]->pShadowMapSRV;
+				batch.srvs[1] = fullScene[visibleScene[oi]]->Material->specularMap;
+				batch.srvs[2] = fullScene[visibleScene[oi]]->Material->normalMap;
+			}
+			else if(lt == 2 && !shadow && bump && spec) {
+				batch.shaderType = SHADERSETDX10::SPOTLIGHTSPECBUMP;
+				batch.srvs[0] = fullScene[visibleScene[oi]]->Material->specularMap;
+				batch.srvs[1] = fullScene[visibleScene[oi]]->Material->normalMap;
+			}
+			else if(lt == 2 && shadow && !bump && spec) {
+				batch.shaderType = SHADERSETDX10::SPOTLIGHTSPECSHADOW;
+				batch.srvs[0] = lights[li]->pShadowMapSRV;
+				batch.srvs[1] = fullScene[visibleScene[oi]]->Material->specularMap;
+			}
+			else if(lt == 2 && !shadow && !bump && spec) {
+				batch.shaderType = SHADERSETDX10::SPOTLIGHTSPEC;
+				batch.srvs[0] = fullScene[visibleScene[oi]]->Material->specularMap;
+			}
+			else if(lt == 2 && shadow && bump && !spec) {
 				batch.shaderType = SHADERSETDX10::SPOTLIGHTBUMPSHADOW;
 				batch.srvs[0] = lights[li]->pShadowMapSRV;
 				batch.srvs[1] = fullScene[visibleScene[oi]]->Material->normalMap;
 			}
-			else if(lt == 2 && !shadow && bump) {
+			else if(lt == 2 && !shadow && bump && !spec) {
 				batch.shaderType = SHADERSETDX10::SPOTLIGHTBUMP;
 				batch.srvs[0] = fullScene[visibleScene[oi]]->Material->normalMap;
-				batch.srvs[1] = NULL;
 			}
-			else if(lt == 2 && shadow && !bump) {
+			else if(lt == 2 && shadow && !bump && !spec) {
 				batch.shaderType = SHADERSETDX10::SPOTLIGHTSHADOW;
 				batch.srvs[0] = lights[li]->pShadowMapSRV;
-				batch.srvs[1] = NULL;
 			}
-			else if(lt == 2 && !shadow && !bump) {
+			else if(lt == 2 && !shadow && !bump && !spec) {
 				batch.shaderType = SHADERSETDX10::SPOTLIGHT;
-				batch.srvs[0] = NULL;
-				batch.srvs[1] = NULL;
 			}
 			
 			batch.world = fullScene[visibleScene[oi]]->World;

@@ -112,5 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="todo.txt" />
+    <Text Include="info.txt" />
+    <Text Include="trash.txt" />
   </ItemGroup>
 </Project>

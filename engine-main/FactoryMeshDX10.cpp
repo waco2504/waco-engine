@@ -92,19 +92,29 @@ bool FactoryMeshDX10::loadMeshesFromOBJ(std::string& filePath) {
 	}
 
 	for(unsigned int i = 0; i < ob.mats.size(); ++i) {
-		strcpy_s(materials[ob.mats[i].name].matName, 32, ob.mats[i].name.c_str());
+		materials[ob.mats[i].name].matName = ob.mats[i].name;
 		materials[ob.mats[i].name].Kd = ob.mats[i].Kd;
-		if(ob.mats[i].map_Kd.size() > 0) {
+
+		// ladowanie mapy koloru diffuse
+		if(ob.mats[i].map_Kd.length() > 0) {
 			resMen->loadTexture2DFromFile(ob.mats[i].map_Kd, ob.mats[i].map_Kd.c_str());
 			materials[ob.mats[i].name].diffuseMap = resMen->getData(ob.mats[i].map_Kd)->srv;
 		} else {
 			materials[ob.mats[i].name].diffuseMap = NULL;
 		}
-		if(ob.mats[i].map_bump.size() > 0) {
+		// ladownaie mapy normalnych
+		if(ob.mats[i].map_bump.length() > 0) {
 			resMen->loadTexture2DFromFile(ob.mats[i].map_bump, ob.mats[i].map_bump.c_str());
 			materials[ob.mats[i].name].normalMap = resMen->getData(ob.mats[i].map_bump)->srv;
 		} else {
 			materials[ob.mats[i].name].normalMap = NULL;
+		}
+		// ladownie mapy koloru (czy wspolczynnika?) specular
+		if(ob.mats[i].map_Ks.length() > 0) {
+			resMen->loadTexture2DFromFile(ob.mats[i].map_Ks, ob.mats[i].map_Ks.c_str());
+			materials[ob.mats[i].name].specularMap = resMen->getData(ob.mats[i].map_Ks)->srv;
+		} else {
+			materials[ob.mats[i].name].specularMap = NULL;
 		}
 	}
 
@@ -179,7 +189,7 @@ bool FactoryMeshDX10::loadMeshesFromOBJ(std::string& filePath) {
 		evertices.data());
 
 	for(unsigned int i = 0; i < ob.groups.size(); ++i) {
-		strcpy_s(meshes[ob.groups[i].name].meshName, 32, ob.groups[i].name.c_str());
+		meshes[ob.groups[i].name].meshName = ob.groups[i].name;
 		meshes[ob.groups[i].name].pdxindexBuffer = resMen->getData(n1)->buf;
 		meshes[ob.groups[i].name].pdxvertexBuffer = resMen->getData(n2)->buf;
 		meshes[ob.groups[i].name].indexCount = ob.groups[i].faces.size()*3;
@@ -396,20 +406,12 @@ bool FactoryMeshDX10::convertOBJToMeshFile(std::string& inFile, std::string& out
 	return true;
 }
 
-MESHDX10* FactoryMeshDX10::getMesh(const char* meshName) {
-	char mna[32] = {0};
-	unsigned int len = strlen(meshName);
-	if(len > 31) len = 31;
-	memcpy_s(mna,32,meshName,len);
-	return &meshes[mna];
+MESHDX10* FactoryMeshDX10::getMesh(std::string& meshName) {
+	return &meshes[meshName];
 }
 
-MATERIALDX10* FactoryMeshDX10::getMaterial(const char* matName) {
-	char mna[32] = {0};
-	unsigned int len = strlen(matName);
-	if(len > 31) len = 31;
-	memcpy_s(mna,32,matName,len);
-	return &materials[mna];
+MATERIALDX10* FactoryMeshDX10::getMaterial(std::string& matName) {
+	return &materials[matName];
 }
 
 unsigned int FactoryMeshDX10::getLoadedBatchSize() {

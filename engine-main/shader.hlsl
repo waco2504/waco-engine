@@ -13,8 +13,8 @@
 /* VSOBPOS - wylicz pozycje pixela w world space */
 /* VSLWVPPOS - wylicz pozycje pixela w light space */
 /* GSOLVEC - wylicz obiekt do swiatla vector */
-/* PSCOLDEPTH */
-/* PSCOLDIST */
+/* PSCOLDEPTH - glebokosc wpisana na target coloru */
+/* PSCOLDIST - dystans do swiatla wpisany na target coloru */
 /* PSCOLSTEX0 */
 /* PSCOLSTEX1 */
 /* PSCOLNORM */
@@ -28,6 +28,7 @@
 /* PSCOLSSAO */
 /* VSTANGENT */
 /* PSBUMPMAP */
+/* PSSPECMAP */
 
 
 /* const buffers */
@@ -290,34 +291,38 @@ POUT PS(PIN pIn) {
 #endif
 
 #if PSLIGHTSPOT != 0 || PSLIGHTPOINT != 0
-	float3 LO = (LPosition.xyz / LPosition.w) - pIn.tex1;
-	float3 CS = normalize(LO);
-	float3 L, N, K;
-	float3 CP = CameraPosition.xyz;
-	float3 OP = pIn.tex1;
+	float3 LO = (LPosition.xyz / LPosition.w) - pIn.tex1;	// wektor do swiatla
+	float3 L;												// kierunek do swiatla
+	float3 N;												// normalna pow fragmentu
+	float3 K;												// kierunek z kamery
+	float3 CP = CameraPosition.xyz;							// pozycja kamery
+	float3 OP = pIn.tex1;									// fragment pos
 	float diff = 0.0f;
 	float spec = 0.0f;
 
 	#ifdef PSBUMPMAP
 		float3 SN = 2.0f * MTexture2D[TEX2DC-1].Sample(MSSSampler, pIn.tex3.xy).xyz - float3(1.0f,1.0f,1.0f); 
-		K = pIn.tex5;
-		N = SN;
-		L = pIn.tex4;
+		K = pIn.tex5;										// kierunek do kamery w tangent space
+		N = SN;												// normalna w tangent space
+		L = pIn.tex4;										// kierunek do swiatla w tangent space
 	#else
-		K = normalize(CP - OP);
-		N = pIn.tex0;
-		L = normalize(LO);
+		K = normalize(CP - OP);								// kierunek do kamery
+		N = pIn.tex0;										// normalna
+		L = normalize(LO);									// kierunek do swiatla
 	#endif
 
-	diff = saturate(dot(L, N));
-	spec = saturate(dot(normalize(L + K), N));
+	diff = max(dot(L,N), 0); 
+	spec = pow(max(dot(normalize(L+K), N), 0), 10);	// 10 to polyskliwosc
+	if(diff <= 0.0f) spec = 0.0f;
 
 	#ifdef PSSPECMAP
 		float sfac = 1.0f;
-		#if TEX2DC == 1 // tylko spec mapa
+		#if TEX2DC == 1									// tylko spec mapa
 			sfac = MTexture2D[0].Sample(MSSSampler, pIn.tex3.xy).x;
-		#else
-			sfac = MTexture2D[1].Sample(MSSSampler, pIn.tex3.xy).x;
+		#elif TEX2DC == 2 && PSSHADOW && !PSBUMPMAP		// tylko spec mapa i shadowmapa
+			sfac = MTexture2D[TEX2DC-1].Sample(MSSSampler, pIn.tex3.xy).x;
+		#else											// shadow mapa, spec mapa, bump mapa
+			sfac = MTexture2D[TEX2DC-2].Sample(MSSSampler, pIn.tex3.xy).x;
 		#endif
 		spec *= sfac;
 	#endif
@@ -338,31 +343,30 @@ POUT PS(PIN pIn) {
 		#if PSLIGHTPOINT != 0
 			distance.x = length(LO);
 			distance.y = dot(LO,LO);
-			moments = MTextureCube[0].Sample(MSSSampler, -CS).xy;
+			moments = MTextureCube[0].Sample(MSSSampler, -L).xy;
 			bias = 0.99f;
 			if(distance.x * bias <= moments.x) lit = 1.0f;
 		#elif PSLIGHTSPOT != 0
-			/*distance.x = pIn.tex2.z / pIn.tex2.w;
+			distance.x = pIn.tex2.z / pIn.tex2.w;
 			float2 tcs = pIn.tex2.xy / pIn.tex2.w;
 			moments = MTexture2D[0].Sample(MSSSampler, tcs).xy;
 			bias = 0.999999f;
-			if(distance.x * bias <= moments.x) lit = 1.0f;*/
+			if(distance.x * bias <= moments.x) lit = 1.0f;
 
-			distance.x = (pIn.tex2.z / pIn.tex2.w)*bias;
+			/*distance.x = (pIn.tex2.z / pIn.tex2.w)*bias;
 			float2 tcs = pIn.tex2.xy / pIn.tex2.w;
 			moments = MTexture2D[0].Sample(MSSSampler, tcs).xy;
 			variance = moments.y - (moments.x * moments.x);
 			float md = moments.x - distance.x;
 			
-			lit = max(variance / (variance + (md * md)), distance.x <= moments.x);
+			lit = max(variance / (variance + (md * md)), distance.x <= moments.x);*/
 		#endif
 
 		diff *= lit;
+		spec *= lit;
 	#endif
 
-	if(spec > diff) spec = diff;
 	pOut.col.xyz = spec * LColor.xyz + diff * LColor.xyz;
-	pOut.col.xyz *= 0.5f;
 	pOut.col.w = 1.0f;
 #endif
 

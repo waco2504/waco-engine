@@ -15,7 +15,7 @@
 #include <algorithm>
 #include <vector>
 
-#define MAXRENDERBATCHSRV 2
+#define MAXRENDERBATCHSRV 3
 
 struct CAMERADX10 {
 	D3D10_VIEWPORT ViewPort;
@@ -32,7 +32,7 @@ struct MESHDX10 {
 		EVECTOR4 tangent;			// w - ma dodatkowe info
 		EVECTOR3 texture0;
 	};
-	char meshName[32];
+	std::string meshName;
 	unsigned int indexCount;
 	unsigned int indexStart;
 	unsigned int vertexStart;
@@ -42,7 +42,7 @@ struct MESHDX10 {
 };
 
 struct MATERIALDX10 {
-	char matName[32];
+	std::string matName;
 	EVECTOR4 Kd;
 	ID3D10ShaderResourceView* diffuseMap;
 	ID3D10ShaderResourceView* normalMap;
@@ -67,10 +67,9 @@ struct LIGHTDX10 {
 		UNKNOWN = 0x00,
 		POINT = 0x01,
 		SPOT = 0x02,
-		DIRECTIONAL = 0x04
 	};
 
-	char lightName[32];
+	std::string lightName;
 	TYPE Type;
 	unsigned int ShadowMapSize;
 	ID3D10RenderTargetView* pShadowMapRTV;
@@ -125,7 +124,7 @@ struct RENDERDESCREPTION {
 	};
 	enum SHADOWQUALITY : int {
 		POINT,
-		//PCF3X3,
+		//VSM,
 	};
 	int renderstate;
 	int shadowQuality;

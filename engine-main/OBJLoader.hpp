@@ -23,6 +23,7 @@ struct OBJLOADER_MATERIAL {
 	EVECTOR3 Ke;
 	std::string map_Ka;
 	std::string map_Kd;
+	std::string map_Ks;
 	std::string map_d;
 	std::string map_bump;
 	std::string bump;

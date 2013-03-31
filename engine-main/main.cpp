@@ -39,8 +39,8 @@ int WINAPI wWinMain(HINSTANCE wInst, HINSTANCE, LPWSTR, int) {
 	init();
 	loadScene();
 
-	//g_ren->add(&l1);
-	g_ren->add(&l2);
+	g_ren->add(&l1);
+	//g_ren->add(&l2);
 
 	for(unsigned int i = 0; i < g_fm->getLoadedBatchSize(); ++i) {
 		g_vscene.push_back(new RENDERABLE());
@@ -139,7 +139,7 @@ void loadScene() {
 		DXGI_FORMAT_R32G32_FLOAT, D3D10_BIND_RENDER_TARGET|D3D10_BIND_SHADER_RESOURCE);
 
 	ZeroMemory(&l1, sizeof(LIGHTDX10));
-	strcpy_s(l1.lightName, 32, "PointLight1");
+	l1.lightName = "PointLight1";
 	l1.Type = LIGHTDX10::POINT;
 	l1.Color = EVECTOR4(0.7f,0.7f,0.7f,1.0f);
 	l1.Position = EVECTOR4(0.0f,600.0f,0.0f,1.0f);
@@ -170,7 +170,7 @@ void loadScene() {
 		DXGI_FORMAT_R32G32_FLOAT, D3D10_BIND_RENDER_TARGET|D3D10_BIND_SHADER_RESOURCE);
 
 	ZeroMemory(&l2, sizeof(LIGHTDX10));
-	strcpy_s(l2.lightName, 32, "SpotLight1");
+	l2.lightName = "SpotLight1";
 	l2.Type = LIGHTDX10::SPOT;
 	l2.Color = EVECTOR4(0.7f,0.7f,0.7f,1.0f);
 	l2.Position = EVECTOR4(0.0f,600.0f,0.0f,1.0f);

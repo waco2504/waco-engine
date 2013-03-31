@@ -1,0 +1,7 @@
+SHADER:
+ - light, shadow, bump, spec
+ -- KOLEJNOSC MAP W SHADERZE:
+ --- najpierw Texture2D potem TextureCUBE
+ --- normalMapa zawsze ostatnia w Texture2D
+ --- specMapa przedostatnia albo ostatnia, kiedy niema bumpmapy i jest cien
+ --- shadow mapa zawsze pierwsza

@@ -54,7 +54,9 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="info.txt" />
     <Text Include="todo.txt" />
+    <Text Include="trash.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D5E3FBAE-7667-42D7-BB69-8F28D4108328}</ProjectGuid>

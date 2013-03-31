@@ -7,81 +7,158 @@
 #include <d3dcompiler.h>
 
 	
-const D3D10_SHADER_MACRO M1[] = { "VINNORM", "1", "VINTAN", "1", "VINTEX1", "1", 
+const D3D10_SHADER_MACRO SHADOWMAP2D[] = { "VINNORM", "1", "VINTAN", "1", "VINTEX1", "1", 
 	"PSCOLDEPTH", "1", NULL, NULL };
 	
-const D3D10_SHADER_MACRO M2[] = { "VINNORM", "1", "VINTAN", "1", "VINTEX1", "1", 
+const D3D10_SHADER_MACRO SHADOWMAP2DDIST[] = { "VINNORM", "1", "VINTAN", "1", "VINTEX1", "1", 
 	"PINTEX1", "1", "VSOLVEC", "1", "PSCOLDIST", "1", NULL, NULL };
 	
-const D3D10_SHADER_MACRO M3[] = { "VINNORM", "1", "VINTAN", "1", "VINTEX1", "1", 
+const D3D10_SHADER_MACRO SHADOWMAPCUBE[] = { "VINNORM", "1", "VINTAN", "1", "VINTEX1", "1", 
 	"PINTEX1", "1", "PINRTAI", "1", "INCGS", "1", "GSOLVEC", "1", "PSCOLDIST", "1", 
 	NULL, NULL };
 
-const D3D10_SHADER_MACRO M4[] = { "VINNORM", "1", "VINTAN", "1", "VINTEX1", "1", 
+const D3D10_SHADER_MACRO SOLIDCOLOR[] = { "VINNORM", "1", "VINTAN", "1", "VINTEX1", "1", 
 	NULL, NULL };
 
-const D3D10_SHADER_MACRO M5[] = { "VINNORM", "1", "VINTAN", "1", "VINTEX1", "1", 
+const D3D10_SHADER_MACRO TEXCOLOR[] = { "VINNORM", "1", "VINTAN", "1", "VINTEX1", "1", 
 	"TEX2DC", "1", "TEXSAMC", "1", "PINTEX0", "1", "PSCOLSTEX0", "1", NULL, NULL };
 
-const D3D10_SHADER_MACRO M6[] = { {"VINNORM", "1"}, {"VINTAN", "1"}, {"VINTEX1", "1"}, 
+const D3D10_SHADER_MACRO SPOTLIGHT[] = { {"VINNORM", "1"}, {"VINTAN", "1"}, {"VINTEX1", "1"}, 
 	{"PINTEX0", "1"}, {"PINTEX1", "1"}, {"PINTEX2", "1"}, {"VSNORM", "1"}, {"VSOBPOS", "1"}, 
 	{"VSLWVPPOS", "1"}, {"PSLIGHTSPOT", "1"}, {NULL, NULL} };
 
-const D3D10_SHADER_MACRO M7[] = { {"VINNORM", "1"}, {"VINTAN", "1"}, {"VINTEX1", "1"}, 
+const D3D10_SHADER_MACRO POINTLIGHT[] = { {"VINNORM", "1"}, {"VINTAN", "1"}, {"VINTEX1", "1"}, 
 	{"PINTEX0", "1"}, {"PINTEX1", "1"}, {"VSNORM", "1"}, {"VSOBPOS", "1"}, {"PSLIGHTPOINT", "1"}, 
 	{NULL, NULL} };
 
-const D3D10_SHADER_MACRO M8[] = { "TEX2DC", "1", "TEXSAMC", "1", "VINNORM", "1", 
+const D3D10_SHADER_MACRO SPOTLIGHTSHADOW[] = { "TEX2DC", "1", "TEXSAMC", "1", "VINNORM", "1", 
 	"VINTAN", "1", "VINTEX1", "1", "PINTEX0", "1", "PINTEX1", "1", "PINTEX2", "1", 
 	"VSNORM", "1", "VSOBPOS", "1", "VSLWVPPOS", "1", "PSLIGHTSPOT", "1", 
 	"PSSHADOW", "1", NULL, NULL };
 
-const D3D10_SHADER_MACRO M9[] = { "TEXCUBEC", "1", "TEXSAMC", "1", "VINNORM", "1", 
+const D3D10_SHADER_MACRO POINTLIGHTSHADOW[] = { "TEXCUBEC", "1", "TEXSAMC", "1", "VINNORM", "1", 
 	"VINTAN", "1", "VINTEX1", "1", "PINTEX0", "1", "PINTEX1", "1", "VSNORM", "1", 
 	"VSOBPOS", "1", "PSLIGHTPOINT", "1", "PSSHADOW", "1", NULL, NULL };
 
-const D3D10_SHADER_MACRO M10[] = { "TEX2DC", "1", "TEXSAMC", "1", "VINNORM", "1", 
+const D3D10_SHADER_MACRO POINTLIGHTBUMP[] = { "TEX2DC", "1", "TEXSAMC", "1", "VINNORM", "1", 
 	"VINTAN", "1", "VINTEX1", "1", "VSTBN", "1", "PINTEX0", "1", "PINTEX1", "1", 
 	"PINTEX3", "1", "PINTEX4", "1", "PINTEX5", "1", "VSNORM", "1", 
 	"VSOBPOS", "1", "PSLIGHTPOINT", "1", "PSBUMPMAP", "1", NULL, NULL };
 
-const D3D10_SHADER_MACRO M11[] = { "TEXCUBEC", "1", "TEX2DC", "1", "TEXSAMC", "1", 
+const D3D10_SHADER_MACRO POINTLIGHTBUMPSHADOW[] = { "TEXCUBEC", "1", "TEX2DC", "1", "TEXSAMC", "1", 
 	"VINNORM", "1", "VINTAN", "1", "VINTEX1", "1", "VSTBN", "1", "PINTEX0", "1", 
 	"PINTEX3", "1", "PINTEX4", "1", "PINTEX5", "1", 
 	"PINTEX1", "1", "VSNORM", "1", "VSOBPOS", "1", "PSLIGHTPOINT", "1", 
 	"PSSHADOW", "1", "PSBUMPMAP", "1", NULL, NULL };
 
-const D3D10_SHADER_MACRO M12[] = { "TEX2DC", "1", "TEXSAMC", "1", "VINNORM", "1", 
+const D3D10_SHADER_MACRO SPOTLIGHTBUMP[] = { "TEX2DC", "1", "TEXSAMC", "1", "VINNORM", "1", 
 	"VINTAN", "1", "VINTEX1", "1", "PINTEX0", "1", "PINTEX1", "1", "PINTEX3", "1", 
 	"PINTEX4", "1", "PINTEX5", "1", "PINTEX2", "1", "VSNORM", "1", 
 	"VSOBPOS", "1", "VSTBN", "1", "VSLWVPPOS", "1", "PSLIGHTSPOT", "1", 
 	"PSBUMPMAP", "1", NULL, NULL };
 
-const D3D10_SHADER_MACRO M13[] = { "TEX2DC", "2", "TEXSAMC", "1", "VINNORM", "1", 
+const D3D10_SHADER_MACRO SPOTLIGHTBUMPSHADOW[] = { "TEX2DC", "2", "TEXSAMC", "1", "VINNORM", "1", 
 	"VINTAN", "1", "VINTEX1", "1", "PINTEX0", "1", "PINTEX1", "1", "PINTEX2", "1", 
 	"VSNORM", "1", "VSOBPOS", "1", "PINTEX3", "1", "PINTEX4", "1", "PINTEX5", "1", 
 	"VSTBN", "1","VSLWVPPOS", "1", "PSLIGHTSPOT", "1", "PSSHADOW", "1", 
 	"PSBUMPMAP", "1", NULL, NULL };
 
-const D3D10_SHADER_MACRO M14[] = { "TEX2DC", "1", "TEXSAMC", "1", "PINTEX0", "1", 
+const D3D10_SHADER_MACRO BLUR[] = { "TEX2DC", "1", "TEXSAMC", "1", "PINTEX0", "1", 
 	"VSCPYPOS", "1", "PSBLUR2D", "1", NULL, NULL };
 
-const D3D10_SHADER_MACRO M15[] = { "TEXCUBEC", "1", "TEXSAMC", "1", "GINTEX0", "1", 
+const D3D10_SHADER_MACRO BLURCUBE[] = { "TEXCUBEC", "1", "TEXSAMC", "1", "GINTEX0", "1", 
 	"PINTEX0", "1", "PINRTAI", "1", "INCGS", "1", "VSCPYPOS", "1", "PSBLURCUBE", "1", 
 	NULL, NULL };
 
-const D3D10_SHADER_MACRO M16[] = { "VINNORM", "1", "VINTAN", "1", "VINTEX1", "1", 
+const D3D10_SHADER_MACRO SSNORMALS[] = { "VINNORM", "1", "VINTAN", "1", "VINTEX1", "1", 
 	"PINTEX0", "1", "VSSSNORM", "1", "PSCOLNORM", "1", NULL, NULL };
 
-const D3D10_SHADER_MACRO M17[] = { "TEX2DC", "2", "TEXSAMC", "1", "VSCPYPOS", "1", 
+const D3D10_SHADER_MACRO SSAO[] = { "TEX2DC", "2", "TEXSAMC", "1", "VSCPYPOS", "1", 
 	"PINTEX0", "1", "PSCOLSSAO", "1", NULL, NULL };
 
-const D3D10_SHADER_MACRO M18[] = { "TEX2DC", "3", "TEXSAMC", "1", "VSCPYPOS", "1", 
+const D3D10_SHADER_MACRO FINALMERGE[] = { "TEX2DC", "3", "TEXSAMC", "1", "VSCPYPOS", "1", 
 	"PINTEX0", "1", "PSFINALMERGE", "1", NULL, NULL };
 
 
+
+const D3D10_SHADER_MACRO SPOTLIGHTSPEC[] = {{"PINTEX3", "1"}, {"PSSPECMAP", "1"}, {"TEX2DC", "1"}, 
+	{"TEXSAMC", "1"}, {"VINNORM", "1"}, {"VINTAN", "1"}, {"VINTEX1", "1"}, 
+	{"PINTEX0", "1"}, {"PINTEX1", "1"}, {"PINTEX2", "1"}, {"VSNORM", "1"}, {"VSOBPOS", "1"}, 
+	{"VSLWVPPOS", "1"}, {"PSLIGHTSPOT", "1"}, {NULL, NULL} };
+
+const D3D10_SHADER_MACRO POINTLIGHTSPEC[] = { {"PINTEX3", "1"}, {"PSSPECMAP", "1"}, {"TEX2DC", "1"}, 
+	{"TEXSAMC", "1"}, {"VINNORM", "1"}, {"VINTAN", "1"}, {"VINTEX1", "1"}, 
+	{"PINTEX0", "1"}, {"PINTEX1", "1"}, {"VSNORM", "1"}, {"VSOBPOS", "1"}, {"PSLIGHTPOINT", "1"}, 
+	{NULL, NULL} };
+
+const D3D10_SHADER_MACRO SPOTLIGHTSPECSHADOW[] = { {"PINTEX3", "1"}, {"PSSPECMAP", "1"}, 
+	{"TEX2DC", "2"}, {"TEXSAMC", "1"}, {"VINNORM", "1"}, 
+	{"VINTAN", "1"}, {"VINTEX1", "1"}, {"PINTEX0", "1"}, {"PINTEX1", "1"}, {"PINTEX2", "1"}, 
+	{"VSNORM", "1"}, {"VSOBPOS", "1"}, {"VSLWVPPOS", "1"}, {"PSLIGHTSPOT", "1"}, 
+	{"PSSHADOW", "1"}, {NULL, NULL} };
+
+const D3D10_SHADER_MACRO POINTLIGHTSPECSHADOW[] = { {"PINTEX3", "1"}, {"PSSPECMAP", "1"}, 
+	{"TEX2DC", "1"}, {"TEXCUBEC", "1"}, {"TEXSAMC", "1"}, {"VINNORM", "1"}, 
+	{"VINTAN", "1"}, {"VINTEX1", "1"}, {"PINTEX0", "1"}, {"PINTEX1", "1"}, {"VSNORM", "1"}, 
+	{"VSOBPOS", "1"}, {"PSLIGHTPOINT", "1"}, {"PSSHADOW", "1"}, {NULL, NULL}};
+
+const D3D10_SHADER_MACRO POINTLIGHTSPECBUMP[] = { "PSSPECMAP", "1", 
+	"TEX2DC", "2", "TEXSAMC", "1", "VINNORM", "1", 
+	"VINTAN", "1", "VINTEX1", "1", "VSTBN", "1", "PINTEX0", "1", "PINTEX1", "1", 
+	"PINTEX3", "1", "PINTEX4", "1", "PINTEX5", "1", "VSNORM", "1", 
+	"VSOBPOS", "1", "PSLIGHTPOINT", "1", "PSBUMPMAP", "1", NULL, NULL };
+
+const D3D10_SHADER_MACRO POINTLIGHTSPECBUMPSHADOW[] = { "PSSPECMAP", "1",
+	"TEXCUBEC", "1", "TEX2DC", "2", "TEXSAMC", "1", 
+	"VINNORM", "1", "VINTAN", "1", "VINTEX1", "1", "VSTBN", "1", "PINTEX0", "1", 
+	"PINTEX3", "1", "PINTEX4", "1", "PINTEX5", "1", 
+	"PINTEX1", "1", "VSNORM", "1", "VSOBPOS", "1", "PSLIGHTPOINT", "1", 
+	"PSSHADOW", "1", "PSBUMPMAP", "1", NULL, NULL };
+
+const D3D10_SHADER_MACRO SPOTLIGHTSPECBUMP[] = { "PSSPECMAP", "1", 
+	"TEX2DC", "2", "TEXSAMC", "1", "VINNORM", "1", 
+	"VINTAN", "1", "VINTEX1", "1", "PINTEX0", "1", "PINTEX1", "1", "PINTEX3", "1", 
+	"PINTEX4", "1", "PINTEX5", "1", "PINTEX2", "1", "VSNORM", "1", 
+	"VSOBPOS", "1", "VSTBN", "1", "VSLWVPPOS", "1", "PSLIGHTSPOT", "1", 
+	"PSBUMPMAP", "1", NULL, NULL };
+
+const D3D10_SHADER_MACRO SPOTLIGHTSPECBUMPSHADOW[] = { "PSSPECMAP", "1",
+	"TEX2DC", "3", "TEXSAMC", "1", "VINNORM", "1", 
+	"VINTAN", "1", "VINTEX1", "1", "PINTEX0", "1", "PINTEX1", "1", "PINTEX2", "1", 
+	"VSNORM", "1", "VSOBPOS", "1", "PINTEX3", "1", "PINTEX4", "1", "PINTEX5", "1", 
+	"VSTBN", "1","VSLWVPPOS", "1", "PSLIGHTSPOT", "1", "PSSHADOW", "1", 
+	"PSBUMPMAP", "1", NULL, NULL };
+
+
+
 const D3D10_SHADER_MACRO* ShaderMacros[] = { 
-	M1, M2, M3, M4, M5, M6, M7, M8, M9, M10, M11, M12, M13, M14, M15, M16, M17, M18
+	SHADOWMAP2D,
+	SHADOWMAP2DDIST,
+	SHADOWMAPCUBE,
+	SOLIDCOLOR,
+	TEXCOLOR,
+	SPOTLIGHT,
+	POINTLIGHT,
+	SPOTLIGHTSHADOW,
+	POINTLIGHTSHADOW,
+	POINTLIGHTBUMP,
+	POINTLIGHTBUMPSHADOW,
+	SPOTLIGHTBUMP,
+	SPOTLIGHTBUMPSHADOW,
+	BLUR,
+	BLURCUBE,
+	SSNORMALS,
+	SSAO,
+	FINALMERGE,
+
+	SPOTLIGHTSPEC,	
+	POINTLIGHTSPEC,
+	SPOTLIGHTSPECSHADOW,
+	POINTLIGHTSPECSHADOW,
+	POINTLIGHTSPECBUMP,
+	POINTLIGHTSPECBUMPSHADOW,
+	SPOTLIGHTSPECBUMP,
+	SPOTLIGHTSPECBUMPSHADOW,
 };
 
 
@@ -175,45 +252,24 @@ SHADERSETDX10 ShaderMenagerDX10::compileShaderSet(SHADERSETDX10::TYPE shaderType
 	pd3dDevice->CreatePixelShader(ppixelShaderBlob->GetBufferPointer(),
 		ppixelShaderBlob->GetBufferSize(), &ret.PixelShader);
 	
-	/*
-	if(		shaderType != SHADERSETDX10::FINALMERGE 
-		&&	shaderType != SHADERSETDX10::SSAO 
-		&&	shaderType != SHADERSETDX10::BLUR 
-		&&	shaderType != SHADERSETDX10::BLURCUBE) {
-*/
-		D3D10_INPUT_ELEMENT_DESC desc[] = {
-			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, 
-			D3D10_INPUT_PER_VERTEX_DATA, 0, }, 
-			{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 
-				D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0, }, 
-			{ "TANGENT", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 
-				D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0, }, 
-			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 
-				D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0, }, 
-			{ "TEXCOORD", 1, DXGI_FORMAT_R32G32B32_FLOAT, 0, 
-				D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0, }, 
-		};
+	D3D10_INPUT_ELEMENT_DESC desc[] = {
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, 
+		D3D10_INPUT_PER_VERTEX_DATA, 0, }, 
+		{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 
+			D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0, }, 
+		{ "TANGENT", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 
+			D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0, }, 
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 
+			D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0, }, 
+		{ "TEXCOORD", 1, DXGI_FORMAT_R32G32B32_FLOAT, 0, 
+			D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0, }, 
+	};
 
-		hr = pd3dDevice->CreateInputLayout(desc, sizeof(desc)/sizeof(D3D10_INPUT_ELEMENT_DESC), 
-			pvertexShaderBlob->GetBufferPointer(),pvertexShaderBlob->GetBufferSize(), 
-			&ret.InputLayout);
-		DXASSERT(S_OK != hr);
-	/*} 
-	else {
-		D3D10_INPUT_ELEMENT_DESC desc[] = {
-			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, 
-				D3D10_INPUT_PER_VERTEX_DATA, 0, },  
-			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 
-				D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0, }, 
-		};
-
-		hr = pd3dDevice->CreateInputLayout(desc, 
-			sizeof(desc)/sizeof(D3D10_INPUT_ELEMENT_DESC), 
-			pvertexShaderBlob->GetBufferPointer(),pvertexShaderBlob->GetBufferSize(), 
-			&ret.InputLayout);
-		DXASSERT(S_OK != hr);
-	}*/
-
+	hr = pd3dDevice->CreateInputLayout(desc, sizeof(desc)/sizeof(D3D10_INPUT_ELEMENT_DESC), 
+		pvertexShaderBlob->GetBufferPointer(),pvertexShaderBlob->GetBufferSize(), 
+		&ret.InputLayout);
+	DXASSERT(S_OK != hr);
+	
 	return ret;
 }
 
@@ -444,18 +500,14 @@ void ShaderMenagerDX10::setTextureSRV(unsigned int size, ID3D10ShaderResourceVie
 }
 
 void ShaderMenagerDX10::onBeginFrame(const SHADERSETDX10::TYPE shaderType) {
-	if(shaderSets.count(shaderType)) {
-		if(activeShader != shaderType) {
-			activeShader = shaderType;
-			pd3dDevice->IASetInputLayout(shaderSets[shaderType].InputLayout);
-			pd3dDevice->VSSetShader(shaderSets[shaderType].VertexShader);
-			pd3dDevice->GSSetShader(shaderSets[shaderType].GeometryShader);
-			pd3dDevice->PSSetShader(shaderSets[shaderType].PixelShader);
-		}
-	} else {
-		std::string msg("ShaderMenagerDX10: SHADERSETDX10::TYPE not found");
-		MessageBox(NULL, msg.c_str(), "Error", MB_OK);
-		exit(1);
+	DXASSERT(shaderSets.count(shaderType) == 0);
+
+	if(activeShader != shaderType) {
+		activeShader = shaderType;
+		pd3dDevice->IASetInputLayout(shaderSets[shaderType].InputLayout);
+		pd3dDevice->VSSetShader(shaderSets[shaderType].VertexShader);
+		pd3dDevice->GSSetShader(shaderSets[shaderType].GeometryShader);
+		pd3dDevice->PSSetShader(shaderSets[shaderType].PixelShader);
 	}
 	
 	updateWorldBuffer();

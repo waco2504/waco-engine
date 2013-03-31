@@ -1,0 +1,22 @@
+SHADERMENAGERDX10::compileShaderSet
+- rozroznienie struktour wejsciowy dla shadera
+if(		shaderType != SHADERSETDX10::FINALMERGE 
+		&&	shaderType != SHADERSETDX10::SSAO 
+		&&	shaderType != SHADERSETDX10::BLUR 
+		&&	shaderType != SHADERSETDX10::BLURCUBE) {
+(..)
+} 
+else {
+	D3D10_INPUT_ELEMENT_DESC desc[] = {
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, 
+			D3D10_INPUT_PER_VERTEX_DATA, 0, },  
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 
+			D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0, }, 
+	};
+
+	hr = pd3dDevice->CreateInputLayout(desc, 
+		sizeof(desc)/sizeof(D3D10_INPUT_ELEMENT_DESC), 
+		pvertexShaderBlob->GetBufferPointer(),pvertexShaderBlob->GetBufferSize(), 
+		&ret.InputLayout);
+	DXASSERT(S_OK != hr);
+}

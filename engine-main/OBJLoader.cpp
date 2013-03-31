@@ -131,6 +131,7 @@ void OBJLoader::loadObjectFromOBJ(OBJLOADER_OBJECT* ret, std::string& fP) {
 			mat.map_bump.clear();
 			mat.map_d.clear();
 			mat.map_Ka.clear();
+			mat.map_Ks.clear();
 		}
 		else if(opt.compare("Ns") == 0) {
 			mtlFile >> mat.Ns;
@@ -167,6 +168,9 @@ void OBJLoader::loadObjectFromOBJ(OBJLOADER_OBJECT* ret, std::string& fP) {
 		}
 		else if(opt.compare("map_Kd") == 0) {
 			mtlFile >> mat.map_Kd;
+		}
+		else if(opt.compare("map_Ks") == 0) {
+			mtlFile >> mat.map_Ks;
 		}
 		else if(opt.compare("map_d") == 0) {
 			mtlFile >> mat.map_d;
