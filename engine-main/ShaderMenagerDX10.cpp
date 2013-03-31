@@ -370,7 +370,7 @@ void ShaderMenagerDX10::init() {
 
 	D3D10_SAMPLER_DESC sDesc;
 	ZeroMemory(&sDesc, sizeof(D3D10_SAMPLER_DESC));
-	sDesc.Filter = D3D10_FILTER_MIN_MAG_MIP_LINEAR;
+	sDesc.Filter = D3D10_FILTER_ANISOTROPIC; 
 	sDesc.AddressU = D3D10_TEXTURE_ADDRESS_WRAP;
 	sDesc.AddressV = D3D10_TEXTURE_ADDRESS_WRAP;
 	sDesc.AddressW = D3D10_TEXTURE_ADDRESS_WRAP;

@@ -45,7 +45,7 @@ void ResourceMenagerDX10::loadTexture2DFromFile(const std::string name, const ch
 	hr = pd3dDevice->CreateShaderResourceView(data[name].tex2d, &srvd, &data[name].srv);
 	DXASSERT(S_OK != hr);
 	
-	//delete [] bmp.data;
+	delete [] bmp.data;
 }
 
 void ResourceMenagerDX10::createTexture2D(const std::string name, UINT w, 

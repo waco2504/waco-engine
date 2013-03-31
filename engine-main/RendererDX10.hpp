@@ -46,6 +46,7 @@ struct MATERIALDX10 {
 	EVECTOR4 Kd;
 	ID3D10ShaderResourceView* diffuseMap;
 	ID3D10ShaderResourceView* normalMap;
+	ID3D10ShaderResourceView* specularMap;
 };
 
 struct RENDERABLE {

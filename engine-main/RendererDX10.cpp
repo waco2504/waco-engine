@@ -481,21 +481,32 @@ void RendererDX10::prepareColBatches() {
 	bool shadow = false;
 	float col[] = {0.0f,0.0f,0.0f,0.0f};
 	
-	// kolor
 	pack.rtv = resMen->getData(std::string("ColorRenderTarget"))->rtv;
 	pack.dsv = pbbD;
 	pd3dDevice->ClearRenderTargetView(pack.rtv, col);
 	pd3dDevice->ClearDepthStencilView(pack.dsv, D3D10_CLEAR_DEPTH, 1.0f, 0);
 	pack.viewPort = curCam.ViewPort;
 	
+	if(renderDesc.renderstate & RENDERDESCREPTION::APPLYCOLOR) {
+		pack.blendState = NULL;
+	}
+	else {
+		pack.blendState = pblendStateColorOff;
+	}
+
 	if(renderDesc.renderstate & RENDERDESCREPTION::APPLYSKYBOX) {
 		EMATRIX mat;
 		mat.identity();
 		mat.translate(curCam.Position.x, curCam.Position.y, curCam.Position.z);
 		
-		pack.blendState = NULL;
 		pack.depthState = pdepthStencilStateOffOff;
-		pack.resterState = presterStateSolidCullFront;
+
+		if(renderDesc.renderstate & RENDERDESCREPTION::APPLYWIREFRAME) {
+			pack.resterState = presterStateWireframe;
+		}
+		else {
+			pack.resterState = presterStateSolidCullFront;
+		}
 
 		pack.batches.clear();
 		batch.camPos = curCam.Position;
@@ -550,9 +561,14 @@ void RendererDX10::prepareColBatches() {
 		batchPacks.push_back(pack);
 	}
 	
-	pack.blendState = NULL;
 	pack.depthState = pdepthStencilStateDef;
-	pack.resterState = presterStateSolid;
+	
+	if(renderDesc.renderstate & RENDERDESCREPTION::APPLYWIREFRAME) {
+		pack.resterState = presterStateWireframe;
+	}
+	else {
+		pack.resterState = presterStateSolid;
+	}
 	
 	cullBatches(curCam.Frustum);
 	pack.batches.clear();
@@ -757,7 +773,7 @@ void RendererDX10::renderBatches() {
 			shaderMen->setTextureSRV(MAXRENDERBATCHSRV, batchPacks[pi].batches[oi].srvs);
 			shaderMen->onBeginFrame(batchPacks[pi].batches[oi].shaderType);
 			shaderMen->onRender(batchPacks[pi].batches[oi].shaderType);
-
+			
 			pd3dDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 			pd3dDevice->IASetVertexBuffers(0, 1, &batchPacks[pi].batches[oi].mesh->pdxvertexBuffer, 
 				&stride, &zero);

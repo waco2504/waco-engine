@@ -2,3 +2,4 @@
 - multisampling shadow map;
 - VSM naprawic;
 - caly rendering na batchach (SSAO, finalMarge);
+- specular maps

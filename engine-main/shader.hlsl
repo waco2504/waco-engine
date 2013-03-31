@@ -404,7 +404,13 @@ POUT PS(PIN pIn) {
 	float4 SSAOFactor = MTexture2D[2].Sample(MSSSampler, pIn.tex0.xy);
 	float ambientFactor = 0.1f;
 
-	pOut.col.xyz = color.xyz * max(max(lightFactor.xyz, ambientFactor), (1.0f-lightFactor.w)) * SSAOFactor.x;
+	float3 lightPart = max(max(lightFactor.xyz, ambientFactor), (1.0f-lightFactor.w)) * SSAOFactor.x;
+
+	if(color.w == 0.0f) // nie wiem czy if to dobry pomysl
+		pOut.col.xyz = lightPart;
+	else 
+		pOut.col.xyz = color.xyz * lightPart;
+
 	pOut.col.w = 1.0f;
 #endif
 
