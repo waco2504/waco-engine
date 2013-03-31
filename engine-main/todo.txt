@@ -1,0 +1,4 @@
+- zarzadzanie samplerami, hardwareowy multisampling textur;
+- multisampling shadow map;
+- VSM naprawic;
+- caly rendering na batchach (SSAO, finalMarge);
