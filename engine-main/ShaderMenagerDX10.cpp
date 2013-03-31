@@ -350,7 +350,7 @@ void ShaderMenagerDX10::initShaders() {
 }
 
 void ShaderMenagerDX10::updateSamplers() {
-	if(activeShader == SHADERSETDX10::SSAO) {
+	if(activeShader != SHADERSETDX10::SSAO) {
 		pd3dDevice->PSSetSamplers(0, 1, &pointSampler);
 	} else {
 		pd3dDevice->PSSetSamplers(0, 1, &linearSampler);

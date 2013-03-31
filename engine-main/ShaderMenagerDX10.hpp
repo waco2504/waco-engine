@@ -42,6 +42,7 @@ struct SHADERSETDX10 {
 		SPOTLIGHTSPECBUMPSHADOW,
 	};
 	TYPE Type;
+	ID3D10SamplerState* samplerState;
 	ID3D10InputLayout* InputLayout;
 	ID3D10VertexShader* VertexShader;	
 	ID3D10GeometryShader* GeometryShader;	

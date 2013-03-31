@@ -1,4 +1,7 @@
-- zarzadzanie samplerami, hardwareowy multisampling textur;
+- (!!) zarzadzanie samplerami, gdzie ej dac, w renderer razem z resterstate, czy w shgadermenager razem z typami teksow? (shadermen)
+
+- hardwareowy multisampling textur;
+
 - multisampling shadow map;
 - VSM naprawic;
 - caly rendering na batchach (SSAO, finalMarge);
@@ -6,5 +9,7 @@
 	tysiac razy jest zle
 - rendering bez modeli z samym skyboxem, dziwnie sie rusza, az tyle FPS?
 - moje wlasne typy plikow meshy nie dzialaja, ale kod jakis jest
+- wywalenie polyskliwosc do constant buffera
+- HDR, tuning swiatel, jakos dziwnie to swieci
 
-- liczenie swiatla!
+- shadowmaping dla point lightu dziwny, jakby wypadalo poza SM

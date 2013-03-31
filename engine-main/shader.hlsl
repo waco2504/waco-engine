@@ -292,13 +292,15 @@ POUT PS(PIN pIn) {
 
 #if PSLIGHTSPOT != 0 || PSLIGHTPOINT != 0
 	float3 LO = (LPosition.xyz / LPosition.w) - pIn.tex1;	// wektor do swiatla
-	float3 L;												// kierunek do swiatla
+	float3 CS = normalize(LO);								// kierunek do swiatla (przy bumpie jest to inny keirunek niz L)
+	float3 L;												// kierunek do swiatla (przy bumpie jest to inny keirunek niz CS)
 	float3 N;												// normalna pow fragmentu
 	float3 K;												// kierunek z kamery
 	float3 CP = CameraPosition.xyz;							// pozycja kamery
 	float3 OP = pIn.tex1;									// fragment pos
 	float diff = 0.0f;
 	float spec = 0.0f;
+	float ss = 1.0f;
 
 	#ifdef PSBUMPMAP
 		float3 SN = 2.0f * MTexture2D[TEX2DC-1].Sample(MSSSampler, pIn.tex3.xy).xyz - float3(1.0f,1.0f,1.0f); 
@@ -312,8 +314,7 @@ POUT PS(PIN pIn) {
 	#endif
 
 	diff = max(dot(L,N), 0); 
-	spec = pow(max(dot(normalize(L+K), N), 0), 10);	// 10 to polyskliwosc
-	if(diff <= 0.0f) spec = 0.0f;
+	spec = pow(max(dot(normalize(L+K), N), 0), 10);			// 10 to polyskliwosc
 
 	#ifdef PSSPECMAP
 		float sfac = 1.0f;
@@ -330,7 +331,7 @@ POUT PS(PIN pIn) {
 	#ifdef PSLIGHTSPOT // stozek
 		float3 V = normalize(-LO);
 		float cosD = dot(V, LDirection.xyz);
-		diff *= smoothstep(LParameters.y, LParameters.x, cosD); 
+		ss = smoothstep(LParameters.y, LParameters.x, cosD); 
 	#endif
 
 	#ifdef PSSHADOW
@@ -343,14 +344,14 @@ POUT PS(PIN pIn) {
 		#if PSLIGHTPOINT != 0
 			distance.x = length(LO);
 			distance.y = dot(LO,LO);
-			moments = MTextureCube[0].Sample(MSSSampler, -L).xy;
+			moments = MTextureCube[0].Sample(MSSSampler, -CS).xy;
 			bias = 0.99f;
 			if(distance.x * bias <= moments.x) lit = 1.0f;
 		#elif PSLIGHTSPOT != 0
 			distance.x = pIn.tex2.z / pIn.tex2.w;
 			float2 tcs = pIn.tex2.xy / pIn.tex2.w;
 			moments = MTexture2D[0].Sample(MSSSampler, tcs).xy;
-			bias = 0.999999f;
+			bias = 0.99999f;
 			if(distance.x * bias <= moments.x) lit = 1.0f;
 
 			/*distance.x = (pIn.tex2.z / pIn.tex2.w)*bias;
@@ -366,7 +367,9 @@ POUT PS(PIN pIn) {
 		spec *= lit;
 	#endif
 
+	if(diff <= 0.0f) spec = 0.0f;
 	pOut.col.xyz = spec * LColor.xyz + diff * LColor.xyz;
+	pOut.col.xyz *= ss;										// smoothstep stozka swiatla
 	pOut.col.w = 1.0f;
 #endif
 

@@ -8,6 +8,7 @@
 
 #include "Timer.hpp"
 
+#include <fstream>
 
 Window* g_win = NULL;
 InputSystemDX* g_insys = NULL;
@@ -39,8 +40,8 @@ int WINAPI wWinMain(HINSTANCE wInst, HINSTANCE, LPWSTR, int) {
 	init();
 	loadScene();
 
-	g_ren->add(&l1);
-	//g_ren->add(&l2);
+	//g_ren->add(&l1);
+	g_ren->add(&l2);
 
 	for(unsigned int i = 0; i < g_fm->getLoadedBatchSize(); ++i) {
 		g_vscene.push_back(new RENDERABLE());
@@ -172,14 +173,15 @@ void loadScene() {
 	ZeroMemory(&l2, sizeof(LIGHTDX10));
 	l2.lightName = "SpotLight1";
 	l2.Type = LIGHTDX10::SPOT;
-	l2.Color = EVECTOR4(0.7f,0.7f,0.7f,1.0f);
-	l2.Position = EVECTOR4(0.0f,600.0f,0.0f,1.0f);
-	EVECTOR4 d(1.0f,-0.25f,0.0f,1.0f); d.normalize();
+	l2.Color = EVECTOR4(1.0f,1.0f,1.0f,1.0f);
+	l2.Position = EVECTOR4(-1004.4f, 1554.8f, -116.439f, 1.0f);
+	EVECTOR4 d(0.715435f, -0.670672f, 0.195837f, 1.0f); //d.normalize();
 	l2.Direction = d;
-	l2.Parameters = EVECTOR4((3.1415f/4.0f)*0.90f,(3.1415f/4.0f)*1.10f,0.0f,1.0f);
+	float l1ang = 3.1415f/3.0f;
+	l2.Parameters = EVECTOR4(l1ang*0.90f,l1ang,0.0f,1.0f);
 	l2.ShadowMapSize = l2sms;
 	
-	l2Cam = new Camera((3.1415f/4.0f)*1.10f, l2sms, l2sms, 1.0f, 10000.0f, l2.Position, 
+	l2Cam = new Camera(l1ang*1.10f, l2sms, l2sms, 1.0f, 5000.0f, l2.Position, 
 		l2.Direction, EVECTOR3(0.0f,1.0f,0.0f));
 	l2.Proj = l2Cam->getProjectionMatrix();
 	l2.View[0] = l2Cam->getViewMatrix();
@@ -244,24 +246,25 @@ void updateCam() {
 		counter = 400.0f;
 	}
 	if(g_insys->isPressed(DIK_F5) && counter <= 0.0f) {
-		if(renDesc.renderstate & RENDERDESCREPTION::APPLYONEPASSCUBESHADOWS) 
-			renDesc.renderstate -= RENDERDESCREPTION::APPLYONEPASSCUBESHADOWS;
-		else 
-			renDesc.renderstate += RENDERDESCREPTION::APPLYONEPASSCUBESHADOWS;
-		counter = 400.0f;
-	}
-	if(g_insys->isPressed(DIK_F6) && counter <= 0.0f) {
 		if(renDesc.renderstate & RENDERDESCREPTION::APPLYSKYBOX) 
 			renDesc.renderstate -= RENDERDESCREPTION::APPLYSKYBOX;
 		else 
 			renDesc.renderstate += RENDERDESCREPTION::APPLYSKYBOX;
 		counter = 400.0f;
 	}
-	if(g_insys->isPressed(DIK_F7) && counter <= 0.0f) {
+	if(g_insys->isPressed(DIK_F6) && counter <= 0.0f) {
 		if(renDesc.renderstate & RENDERDESCREPTION::APPLYWIREFRAME) 
 			renDesc.renderstate -= RENDERDESCREPTION::APPLYWIREFRAME;
 		else 
 			renDesc.renderstate += RENDERDESCREPTION::APPLYWIREFRAME;
+		counter = 400.0f;
+	}
+	if(g_insys->isPressed(DIK_F9) && counter <= 0.0f) {
+		std::ofstream ofile("camera.txt");
+		ofile << cam->getPosition().x << " " << cam->getPosition().y << " " << cam->getPosition().z << std::endl;
+		ofile << cam->getDirection().x << " " << cam->getDirection().y << " " << cam->getDirection().z << std::endl;
+		ofile.close();
+		MessageBox(NULL, "Zapisano stan kamery do camera.txt", "", MB_OK);
 		counter = 400.0f;
 	}
 
