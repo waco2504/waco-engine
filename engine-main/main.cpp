@@ -40,7 +40,7 @@ int WINAPI wWinMain(HINSTANCE wInst, HINSTANCE, LPWSTR, int) {
 	init();
 	loadScene();
 
-	//g_ren->add(&l1);
+	g_ren->add(&l1);
 	g_ren->add(&l2);
 
 	for(unsigned int i = 0; i < g_fm->getLoadedBatchSize(); ++i) {
@@ -142,7 +142,7 @@ void loadScene() {
 	ZeroMemory(&l1, sizeof(LIGHTDX10));
 	l1.lightName = "PointLight1";
 	l1.Type = LIGHTDX10::POINT;
-	l1.Color = EVECTOR4(0.7f,0.7f,0.7f,1.0f);
+	l1.Color = EVECTOR4(0.8f,0.2f,0.2f,1.0f);
 	l1.Position = EVECTOR4(0.0f,600.0f,0.0f,1.0f);
 	l1.Direction = EVECTOR4(1.0f,0.0f,0.0f,1.0f);
 	l1.Parameters = EVECTOR4(0.0f,0.0f,0.0f,1.0f);
@@ -173,7 +173,7 @@ void loadScene() {
 	ZeroMemory(&l2, sizeof(LIGHTDX10));
 	l2.lightName = "SpotLight1";
 	l2.Type = LIGHTDX10::SPOT;
-	l2.Color = EVECTOR4(1.0f,1.0f,1.0f,1.0f);
+	l2.Color = EVECTOR4(0.2f,0.2f,0.8f,1.0f);
 	l2.Position = EVECTOR4(-1004.4f, 1554.8f, -116.439f, 1.0f);
 	EVECTOR4 d(0.715435f, -0.670672f, 0.195837f, 1.0f); //d.normalize();
 	l2.Direction = d;

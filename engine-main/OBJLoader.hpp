@@ -46,6 +46,7 @@ struct OBJLOADER_GROUP {
 };
 
 struct OBJLOADER_OBJECT {
+	std::string mtlFileName;
 	std::vector<EVECTOR3> poss;
 	std::vector<EVECTOR3> norms;
 	std::vector<EVECTOR3> coords;

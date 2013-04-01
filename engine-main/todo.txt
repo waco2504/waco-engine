@@ -1,15 +1,31 @@
 - (!!) zarzadzanie samplerami, dodac opis do shaderset
--- x tekstur x samplerow, kazdy sampler odpowiednio przyp[isany do slotu, 
+-- x tekstur x samplerow, kazdy sampler odpowiednio przypisany do slotu, 
 	tak jak trzeba, zaelzenie od shadersetu
+
+- HDR rendering (?)
+-- rysujemy swiatlo do fp16
+-- rysujemy color normalnie 
+-- laczymy color z swiatlem do fp16 (i z SSAO?)
+-- liczymy jasnosc sceny
+--- rendering do coraz to mniejszego RT, az do RT 1x1 (?)
+---- czy downsampling i wyliczanie na procesorze?
+-- bright pass (?)
+--- filtrujemy scene do int8 (jasne miejsca)
+--- blurujemy int8 (plamy maja byc wieksze, a nie, jak ostatnio, mniejsze)
+---- gaussian 2 przebiegi (?)
+-- laczymy wszystko na backbuffer
+
+- zapisac skompilowane shadery
+
+- Naprawic FactoryMeshDX
+-- wlasne formaty MESHY
+-- factorymesh masa nadmiarowego kodu
+--- factorymesh bardzo brzydko
 
 - hardwareowy multisampling textur;
 - multisampling shadow map;
 - VSM naprawic;
 
-- wlasne formaty MESHY, zapisac skompilowane shadery
-
 - czy SSAO blurowac? teraz wyglada fajnie
 - rendering bez modeli z samym skyboxem, dziwnie sie rusza, az tyle FPS?
-- moje wlasne typy plikow meshy nie dzialaja, ale kod jakis jest
 - wywalenie polyskliwosc do constant buffera
-- HDR, tuning swiatel, jakos dziwnie to swieci

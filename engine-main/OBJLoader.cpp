@@ -32,6 +32,7 @@ void OBJLoader::loadObjectFromOBJ(OBJLOADER_OBJECT* ret, std::string& fP) {
 		}
 		else if(opt.compare(0, 6, "mtllib") == 0) { // nazwa pliku z materialem
 			objFile >> mtlFilePath;
+			ret->mtlFileName = mtlFilePath;
 		}
 		else if(opt.compare("v") == 0) {
 			objFile >> vec.x >> vec.y >> vec.z;
