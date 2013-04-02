@@ -16,7 +16,7 @@ bool operator==(const RENDERBATCH& l, const RENDERBATCH& r) {
 		&& l.mesh == r.mesh && l.light == r.light;
 	
 	if(ret) {
-		for(unsigned int i = 0; i < MAXRENDERBATCHSRV; ++i) {
+		for(unsigned int i = 0; i < SHADERMAXSRV; ++i) {
 			if(l.srvs[i] != r.srvs[i]) return false;
 		}
 	}
@@ -456,7 +456,7 @@ void RendererDX10::prepareSMBatches() {
 				else if(lights[li]->Type == LIGHTDX10::POINT) 
 					batch.shaderType = SHADERSETDX10::SHADOWMAPCUBE;
 			
-				for(unsigned int i = 0; i < MAXRENDERBATCHSRV; ++i) 
+				for(unsigned int i = 0; i < SHADERMAXSRV; ++i) 
 					batch.srvs[i] = NULL;
 			
 				for(unsigned int i = 0; i < 6; ++i)
@@ -512,7 +512,7 @@ void RendererDX10::prepareColBatches() {
 		batch.shaderType = SHADERSETDX10::TEXCOLOR;
 		batch.proj = curCam.ProjMatrix;
 		batch.view[0] = curCam.ViewMatrix;
-		for(unsigned int i = 0; i < MAXRENDERBATCHSRV; ++i)
+		for(unsigned int i = 0; i < SHADERMAXSRV; ++i)
 			batch.srvs[i] = NULL;
 
 		batch.mesh = &skyBoxFace[0];
@@ -582,7 +582,7 @@ void RendererDX10::prepareColBatches() {
 		//batch.light.View;
 		batch.mesh = fullScene[visibleScene[oi]]->Mesh;
 		batch.proj = curCam.ProjMatrix;
-		for(unsigned int i = 0; i < MAXRENDERBATCHSRV; ++i) 
+		for(unsigned int i = 0; i < SHADERMAXSRV; ++i) 
 			batch.srvs[i] = NULL;
 		if(fullScene[visibleScene[oi]]->Material->diffuseMap != NULL) {
 			batch.shaderType = SHADERSETDX10::TEXCOLOR;
@@ -636,7 +636,7 @@ void RendererDX10::prepareLitBatches() {
 
 		for(unsigned int oi = 0; oi < visibleScene.size(); ++oi) {
 			lt = 0; shadow = false; bump = false; spec = false;
-			for(unsigned int i = 0; i < MAXRENDERBATCHSRV; ++i) 
+			for(unsigned int i = 0; i < SHADERMAXSRV; ++i) 
 				batch.srvs[i] = NULL;
 			
 			if(lights[li]->Type == LIGHTDX10::POINT) 
@@ -765,7 +765,7 @@ void RendererDX10::prepareSSNormBatches() {
 		batch.mesh = fullScene[visibleScene[oi]]->Mesh;
 		batch.proj = curCam.ProjMatrix;
 		batch.shaderType = SHADERSETDX10::SSNORMALS;
-		for(unsigned int i = 0; i < MAXRENDERBATCHSRV; ++i) 
+		for(unsigned int i = 0; i < SHADERMAXSRV; ++i) 
 			batch.srvs[i] = NULL;
 		for(unsigned int i = 0; i < 6; ++i)
 			batch.view[i] = curCam.ViewMatrix;
@@ -780,7 +780,7 @@ void RendererDX10::prepareSSNormBatches() {
 void RendererDX10::prepareSSAOBatches() {
 	RENDERBATCH batch;
 	RENDERBATCHPACK pack;
-	for(unsigned int i = 0; i < MAXRENDERBATCHSRV; ++i) 
+	for(unsigned int i = 0; i < SHADERMAXSRV; ++i) 
 		batch.srvs[i] = NULL;
 	
 
@@ -810,7 +810,7 @@ void RendererDX10::prepareSSAOBatches() {
 void RendererDX10::prepareFinalMargeBatches() {
 	RENDERBATCH batch;
 	RENDERBATCHPACK pack;
-	for(unsigned int i = 0; i < MAXRENDERBATCHSRV; ++i) 
+	for(unsigned int i = 0; i < SHADERMAXSRV; ++i) 
 		batch.srvs[i] = NULL;
 
 	batch.shaderType = SHADERSETDX10::FINALMERGE;
@@ -861,7 +861,7 @@ void RendererDX10::renderBatches() {
 				shaderMen->setCubeViewMatrix(i, batchPacks[pi].batches[oi].view[i]);
 			shaderMen->setWorldMatrix(batchPacks[pi].batches[oi].world);
 			shaderMen->setLightDesc(&batchPacks[pi].batches[oi].light);
-			shaderMen->setTextureSRV(MAXRENDERBATCHSRV, batchPacks[pi].batches[oi].srvs);
+			shaderMen->setTextureSRV(SHADERMAXSRV, batchPacks[pi].batches[oi].srvs);
 			shaderMen->onBeginFrame(batchPacks[pi].batches[oi].shaderType);
 			shaderMen->onRender(batchPacks[pi].batches[oi].shaderType);
 			

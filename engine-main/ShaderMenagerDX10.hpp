@@ -13,6 +13,8 @@
 #define SHADERFILE "..\\engine-main\\shader.hlsl"
 #endif
 
+#define SHADERMAXSRV 3
+
 struct SHADERSETDX10 {
 	enum TYPE : int { //  do indeksowania shadermecros
 		SHADOWMAP2D,
@@ -44,7 +46,7 @@ struct SHADERSETDX10 {
 		SPOTLIGHTSPECBUMPSHADOW,
 	};
 	TYPE Type;
-	ID3D10SamplerState* SamplerState;
+	ID3D10SamplerState* SamplerState[SHADERMAXSRV];
 	ID3D10InputLayout* InputLayout;
 	ID3D10VertexShader* VertexShader;	
 	ID3D10GeometryShader* GeometryShader;	
@@ -123,8 +125,8 @@ private:
 
 	void initConstantBuffers();
 	void initShaders();
+	void initSamplers();
 
-	void updateSamplers();
 	void updateTextures();
 	void updateWorldBuffer();
 	void updateObjectBuffer();

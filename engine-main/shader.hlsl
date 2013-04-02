@@ -80,7 +80,7 @@ cbuffer SSAOBuffer : register(b4) {
 
 
 #if TEXSAMC > 0
-	SamplerState MSSSampler : register(ps, s0);
+	SamplerState MSampler[TEXSAMC] : register(ps, s0);
 #endif
 
 
@@ -278,11 +278,11 @@ POUT PS(PIN pIn) {
 	pOut.col.y = dot(pIn.tex1,pIn.tex1);
 #endif
 #ifdef PSCOLSTEX0
-	pOut.col = MTexture2D[0].Sample(MSSSampler, pIn.tex0.xy);
+	pOut.col = MTexture2D[0].Sample(MSampler[0], pIn.tex0.xy);
 #endif
 #ifdef PSCOLSTEX1
 	pOut.col =	pOut.col * 0.5f + 
-				MTexture2D[1].Sample(MSSSampler, pIn.tex1.xy) * 0.5f;
+				MTexture2D[1].Sample(MSampler[1], pIn.tex1.xy) * 0.5f;
 #endif
 
 #ifdef PSCOLNORM
@@ -303,7 +303,7 @@ POUT PS(PIN pIn) {
 	float ss = 1.0f;
 
 	#ifdef PSBUMPMAP
-		float3 SN = 2.0f * MTexture2D[TEX2DC-1].Sample(MSSSampler, pIn.tex3.xy).xyz - float3(1.0f,1.0f,1.0f); 
+		float3 SN = 2.0f * MTexture2D[TEX2DC-1].Sample(MSampler[TEX2DC-1], pIn.tex3.xy).xyz - float3(1.0f,1.0f,1.0f); 
 		K = pIn.tex5;										// kierunek do kamery w tangent space
 		N = SN;												// normalna w tangent space
 		L = pIn.tex4;										// kierunek do swiatla w tangent space
@@ -319,11 +319,11 @@ POUT PS(PIN pIn) {
 	#ifdef PSSPECMAP
 		float sfac = 1.0f;
 		#if TEX2DC == 1									// tylko spec mapa
-			sfac = MTexture2D[0].Sample(MSSSampler, pIn.tex3.xy).x;
+			sfac = MTexture2D[0].Sample(MSampler[0], pIn.tex3.xy).x;
 		#elif TEX2DC == 2 && PSSHADOW && !PSBUMPMAP		// tylko spec mapa i shadowmapa
-			sfac = MTexture2D[TEX2DC-1].Sample(MSSSampler, pIn.tex3.xy).x;
+			sfac = MTexture2D[TEX2DC-1].Sample(MSampler[TEX2DC-1], pIn.tex3.xy).x;
 		#else											// shadow mapa, spec mapa, bump mapa
-			sfac = MTexture2D[TEX2DC-2].Sample(MSSSampler, pIn.tex3.xy).x;
+			sfac = MTexture2D[TEX2DC-2].Sample(MSampler[TEX2DC-2], pIn.tex3.xy).x;
 		#endif
 		spec *= sfac;
 	#endif
@@ -343,20 +343,24 @@ POUT PS(PIN pIn) {
 
 		#if PSLIGHTPOINT != 0
 			distance.x = length(LO);
-			distance.y = dot(LO,LO);
-			moments = MTextureCube[0].Sample(MSSSampler, -CS).xy;
+			distance.y = dot(LO,LO);	
+		#ifdef TEX2DC
+			moments = MTextureCube[0].Sample(MSampler[TEX2DC], -CS).xy;		// samplery cubemaps s¹ po samplerach 2dmaps
+		#else
+			moments = MTextureCube[0].Sample(MSampler[0], -CS).xy;		// samplery cubemaps s¹ po samplerach 2dmaps
+		#endif
 			bias = 0.99f;
 			if(distance.x * bias <= moments.x) lit = 1.0f;
 		#elif PSLIGHTSPOT != 0
 			distance.x = pIn.tex2.z / pIn.tex2.w;
 			float2 tcs = pIn.tex2.xy / pIn.tex2.w;
-			moments = MTexture2D[0].Sample(MSSSampler, tcs).xy;
+			moments = MTexture2D[0].Sample(MSampler[0], tcs).xy;
 			bias = 0.99999f;
 			if(distance.x * bias <= moments.x) lit = 1.0f;
 
 			/*distance.x = (pIn.tex2.z / pIn.tex2.w)*bias;
 			float2 tcs = pIn.tex2.xy / pIn.tex2.w;
-			moments = MTexture2D[0].Sample(MSSSampler, tcs).xy;
+			moments = MTexture2D[0].Sample(MSampler[0], tcs).xy;
 			variance = moments.y - (moments.x * moments.x);
 			float md = moments.x - distance.x;
 			
@@ -367,7 +371,7 @@ POUT PS(PIN pIn) {
 		spec *= lit;
 	#endif
 
-	if(diff <= 0.0f) spec = 0.0f;
+	if(diff <= 0.0f || spec < 0.0f) spec = 0.0f;
 	pOut.col.xyz = spec * LColor.xyz + diff * LColor.xyz;
 	pOut.col.xyz *= ss;										// smoothstep stozka swiatla
 	pOut.col.w = 1.0f;
@@ -395,10 +399,10 @@ POUT PS(PIN pIn) {
 		[unroll]
 		for(int j = 0; j < 7; ++j) {
 			#if PSBLUR2D != 0
-			pOut.col += MTexture2D[0].Sample(MSSSampler, 
+			pOut.col += MTexture2D[0].Sample(MSampler[0], 
 				float2(tc.x+j*TexelSize.x, tc.y+i*TexelSize.y)) * gauss[i*7 + j];
 			#elif PSBLURCUBE != 0
-			pOut.col += MTextureCube[0].Sample(MSSSampler, 
+			pOut.col += MTextureCube[0].Sample(MSampler[0], 
 				float3(tc.x+j*TexelSize.x, tc.y+i*TexelSize.y, pIn.tex0.z)) * gauss[i*7 + j];
 			#endif
 		}
@@ -406,9 +410,9 @@ POUT PS(PIN pIn) {
 #endif
 
 #ifdef PSFINALMERGE
-	float4 color = MTexture2D[0].Sample(MSSSampler, pIn.tex0.xy);
-	float4 lightFactor = MTexture2D[1].Sample(MSSSampler, pIn.tex0.xy);
-	float4 SSAOFactor = MTexture2D[2].Sample(MSSSampler, pIn.tex0.xy);
+	float4 color = MTexture2D[0].Sample(MSampler[0], pIn.tex0.xy);
+	float4 lightFactor = MTexture2D[1].Sample(MSampler[1], pIn.tex0.xy);
+	float4 SSAOFactor = MTexture2D[2].Sample(MSampler[2], pIn.tex0.xy);
 	float ambientFactor = 0.1f;
 
 	float3 lightPart = max(max(lightFactor.xyz, ambientFactor), (1.0f-lightFactor.w)) * SSAOFactor.x;
@@ -441,8 +445,8 @@ POUT PS(PIN pIn) {
 		float3(-0.47761092, 0.2847911, -0.0271716) };
 
 	
-	float3 fres = normalize((MTexture2D[1].Sample(MSSSampler, pIn.tex0.xy).xyz * 2.0f) - float3(1.0,1.0,1.0));	// grab a normal for reflecting the sample rays later on
-	float4 currentPixelSample = MTexture2D[0].Sample(MSSSampler, pIn.tex0.xy);
+	float3 fres = normalize((MTexture2D[1].Sample(MSampler[1], pIn.tex0.xy).xyz * 2.0f) - float3(1.0,1.0,1.0));	// grab a normal for reflecting the sample rays later on
+	float4 currentPixelSample = MTexture2D[0].Sample(MSampler[0], pIn.tex0.xy);
 	float currentPixelDepth = currentPixelSample.w;
 	float3 ep = float3(pIn.tex0.x, pIn.tex0.y, currentPixelDepth);											// current fragment coords in screen space
 	float3 norm = currentPixelSample.xyz;																	// get the normal of current fragment
@@ -459,7 +463,7 @@ POUT PS(PIN pIn) {
 		se = ep + sign(dot(ray,norm))*ray;
  
 		// get the depth of the occluder fragment
-		float4 occluderFragment = MTexture2D[0].Sample(MSSSampler, se.xy);
+		float4 occluderFragment = MTexture2D[0].Sample(MSampler[0], se.xy);
  
 		// get the normal of the occluder fragment
 		occNorm = occluderFragment.xyz;

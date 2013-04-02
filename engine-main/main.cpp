@@ -35,12 +35,13 @@ Timer timer;
 void init();
 void loadScene();
 void updateCam();
+void updateLight();
 
 int WINAPI wWinMain(HINSTANCE wInst, HINSTANCE, LPWSTR, int) {
 	init();
 	loadScene();
 
-	g_ren->add(&l1);
+	//g_ren->add(&l1);
 	g_ren->add(&l2);
 
 	for(unsigned int i = 0; i < g_fm->getLoadedBatchSize(); ++i) {
@@ -59,7 +60,8 @@ int WINAPI wWinMain(HINSTANCE wInst, HINSTANCE, LPWSTR, int) {
 		g_win->update();
 
 		updateCam();
-		
+		updateLight();
+
 		timer.start();
 
 		g_ren->setCamera(renCam);
@@ -173,11 +175,11 @@ void loadScene() {
 	ZeroMemory(&l2, sizeof(LIGHTDX10));
 	l2.lightName = "SpotLight1";
 	l2.Type = LIGHTDX10::SPOT;
-	l2.Color = EVECTOR4(0.2f,0.2f,0.8f,1.0f);
-	l2.Position = EVECTOR4(-1004.4f, 1554.8f, -116.439f, 1.0f);
-	EVECTOR4 d(0.715435f, -0.670672f, 0.195837f, 1.0f); //d.normalize();
+	l2.Color = EVECTOR4(0.5f,0.5f,0.9f,1.0f);
+	l2.Position = EVECTOR4(-77.7215f, 2414.56f, -475.13f, 1.0f);
+	EVECTOR4 d(0.00426762f, -0.957499f, 0.288406f, 1.0f); //d.normalize();
 	l2.Direction = d;
-	float l1ang = 3.1415f/3.0f;
+	float l1ang = 3.1415f/2.5f;
 	l2.Parameters = EVECTOR4(l1ang*0.90f,l1ang,0.0f,1.0f);
 	l2.ShadowMapSize = l2sms;
 	
@@ -273,4 +275,27 @@ void updateCam() {
 	renCam.ViewMatrix = cam->getViewMatrix();
 	renCam.Position = cam->getPosition();
 	renCam.Frustum = cam->getFrustum();
+}
+
+void updateLight() {
+	unsigned long int t = timer.getMilliSeconds();
+
+	// swiatlo halogen
+	EMATRIX rot;
+	EVECTOR3 pos;
+
+	rot.rotateY(-0.001f * t);
+	pos = l2Cam->getPosition();
+
+	pos = rot * pos;
+
+	l2Cam->setPosition(pos);
+	l2Cam->rotateYaw(-0.001f * t);
+	
+	l2.Position = l2Cam->getPosition();
+	l2.Direction = l2Cam->getDirection();
+	l2.Proj = l2Cam->getProjectionMatrix();
+	l2.View[0] = l2Cam->getViewMatrix();
+	l2.Frustum[0] = l2Cam->getFrustum();
+	////////////////////////////////////////
 }

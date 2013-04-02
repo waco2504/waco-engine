@@ -5,3 +5,6 @@ SHADER:
  --- normalMapa zawsze ostatnia w Texture2D
  --- specMapa przedostatnia albo ostatnia, kiedy niema bumpmapy i jest cien
  --- shadow mapa zawsze pierwsza
+ - samplerstates
+ -- kazdy shader ma stala liczbe textur i stale przypisanie typow samplerow 
+	dla kazdego slotu/textury, 

@@ -45,7 +45,7 @@ const D3D10_SHADER_MACRO POINTLIGHTBUMP[] = { "TEX2DC", "1", "TEXSAMC", "1", "VI
 	"PINTEX3", "1", "PINTEX4", "1", "PINTEX5", "1", "VSNORM", "1", 
 	"VSOBPOS", "1", "PSLIGHTPOINT", "1", "PSBUMPMAP", "1", NULL, NULL };
 
-const D3D10_SHADER_MACRO POINTLIGHTBUMPSHADOW[] = { "TEXCUBEC", "1", "TEX2DC", "1", "TEXSAMC", "1", 
+const D3D10_SHADER_MACRO POINTLIGHTBUMPSHADOW[] = { "TEXCUBEC", "1", "TEX2DC", "1", "TEXSAMC", "2", 
 	"VINNORM", "1", "VINTAN", "1", "VINTEX1", "1", "VSTBN", "1", "PINTEX0", "1", 
 	"PINTEX3", "1", "PINTEX4", "1", "PINTEX5", "1", 
 	"PINTEX1", "1", "VSNORM", "1", "VSOBPOS", "1", "PSLIGHTPOINT", "1", 
@@ -57,7 +57,7 @@ const D3D10_SHADER_MACRO SPOTLIGHTBUMP[] = { "TEX2DC", "1", "TEXSAMC", "1", "VIN
 	"VSOBPOS", "1", "VSTBN", "1", "VSLWVPPOS", "1", "PSLIGHTSPOT", "1", 
 	"PSBUMPMAP", "1", NULL, NULL };
 
-const D3D10_SHADER_MACRO SPOTLIGHTBUMPSHADOW[] = { "TEX2DC", "2", "TEXSAMC", "1", "VINNORM", "1", 
+const D3D10_SHADER_MACRO SPOTLIGHTBUMPSHADOW[] = { "TEX2DC", "2", "TEXSAMC", "2", "VINNORM", "1", 
 	"VINTAN", "1", "VINTEX1", "1", "PINTEX0", "1", "PINTEX1", "1", "PINTEX2", "1", 
 	"VSNORM", "1", "VSOBPOS", "1", "PINTEX3", "1", "PINTEX4", "1", "PINTEX5", "1", 
 	"VSTBN", "1","VSLWVPPOS", "1", "PSLIGHTSPOT", "1", "PSSHADOW", "1", 
@@ -73,10 +73,10 @@ const D3D10_SHADER_MACRO BLURCUBE[] = { "TEXCUBEC", "1", "TEXSAMC", "1", "GINTEX
 const D3D10_SHADER_MACRO SSNORMALS[] = { "VINNORM", "1", "VINTAN", "1", "VINTEX1", "1", 
 	"PINTEX0", "1", "VSSSNORM", "1", "PSCOLNORM", "1", NULL, NULL };
 
-const D3D10_SHADER_MACRO SSAO[] = { "TEX2DC", "2", "TEXSAMC", "1", "VSCPYPOS", "1", 
+const D3D10_SHADER_MACRO SSAO[] = { "TEX2DC", "2", "TEXSAMC", "2", "VSCPYPOS", "1", 
 	"PINTEX0", "1", "PSCOLSSAO", "1", NULL, NULL };
 
-const D3D10_SHADER_MACRO FINALMERGE[] = { "TEX2DC", "3", "TEXSAMC", "1", "VSCPYPOS", "1", 
+const D3D10_SHADER_MACRO FINALMERGE[] = { "TEX2DC", "3", "TEXSAMC", "3", "VSCPYPOS", "1", 
 	"PINTEX0", "1", "PSFINALMERGE", "1", NULL, NULL };
 
 
@@ -92,38 +92,38 @@ const D3D10_SHADER_MACRO POINTLIGHTSPEC[] = { {"PINTEX3", "1"}, {"PSSPECMAP", "1
 	{NULL, NULL} };
 
 const D3D10_SHADER_MACRO SPOTLIGHTSPECSHADOW[] = { {"PINTEX3", "1"}, {"PSSPECMAP", "1"}, 
-	{"TEX2DC", "2"}, {"TEXSAMC", "1"}, {"VINNORM", "1"}, 
+	{"TEX2DC", "2"}, {"TEXSAMC", "2"}, {"VINNORM", "1"}, 
 	{"VINTAN", "1"}, {"VINTEX1", "1"}, {"PINTEX0", "1"}, {"PINTEX1", "1"}, {"PINTEX2", "1"}, 
 	{"VSNORM", "1"}, {"VSOBPOS", "1"}, {"VSLWVPPOS", "1"}, {"PSLIGHTSPOT", "1"}, 
 	{"PSSHADOW", "1"}, {NULL, NULL} };
 
 const D3D10_SHADER_MACRO POINTLIGHTSPECSHADOW[] = { {"PINTEX3", "1"}, {"PSSPECMAP", "1"}, 
-	{"TEX2DC", "1"}, {"TEXCUBEC", "1"}, {"TEXSAMC", "1"}, {"VINNORM", "1"}, 
+	{"TEX2DC", "1"}, {"TEXCUBEC", "1"}, {"TEXSAMC", "2"}, {"VINNORM", "1"}, 
 	{"VINTAN", "1"}, {"VINTEX1", "1"}, {"PINTEX0", "1"}, {"PINTEX1", "1"}, {"VSNORM", "1"}, 
 	{"VSOBPOS", "1"}, {"PSLIGHTPOINT", "1"}, {"PSSHADOW", "1"}, {NULL, NULL}};
 
 const D3D10_SHADER_MACRO POINTLIGHTSPECBUMP[] = { "PSSPECMAP", "1", 
-	"TEX2DC", "2", "TEXSAMC", "1", "VINNORM", "1", 
+	"TEX2DC", "2", "TEXSAMC", "2", "VINNORM", "1", 
 	"VINTAN", "1", "VINTEX1", "1", "VSTBN", "1", "PINTEX0", "1", "PINTEX1", "1", 
 	"PINTEX3", "1", "PINTEX4", "1", "PINTEX5", "1", "VSNORM", "1", 
 	"VSOBPOS", "1", "PSLIGHTPOINT", "1", "PSBUMPMAP", "1", NULL, NULL };
 
 const D3D10_SHADER_MACRO POINTLIGHTSPECBUMPSHADOW[] = { "PSSPECMAP", "1",
-	"TEXCUBEC", "1", "TEX2DC", "2", "TEXSAMC", "1", 
+	"TEXCUBEC", "1", "TEX2DC", "2", "TEXSAMC", "3", 
 	"VINNORM", "1", "VINTAN", "1", "VINTEX1", "1", "VSTBN", "1", "PINTEX0", "1", 
 	"PINTEX3", "1", "PINTEX4", "1", "PINTEX5", "1", 
 	"PINTEX1", "1", "VSNORM", "1", "VSOBPOS", "1", "PSLIGHTPOINT", "1", 
 	"PSSHADOW", "1", "PSBUMPMAP", "1", NULL, NULL };
 
 const D3D10_SHADER_MACRO SPOTLIGHTSPECBUMP[] = { "PSSPECMAP", "1", 
-	"TEX2DC", "2", "TEXSAMC", "1", "VINNORM", "1", 
+	"TEX2DC", "2", "TEXSAMC", "2", "VINNORM", "1", 
 	"VINTAN", "1", "VINTEX1", "1", "PINTEX0", "1", "PINTEX1", "1", "PINTEX3", "1", 
 	"PINTEX4", "1", "PINTEX5", "1", "PINTEX2", "1", "VSNORM", "1", 
 	"VSOBPOS", "1", "VSTBN", "1", "VSLWVPPOS", "1", "PSLIGHTSPOT", "1", 
 	"PSBUMPMAP", "1", NULL, NULL };
 
 const D3D10_SHADER_MACRO SPOTLIGHTSPECBUMPSHADOW[] = { "PSSPECMAP", "1",
-	"TEX2DC", "3", "TEXSAMC", "1", "VINNORM", "1", 
+	"TEX2DC", "3", "TEXSAMC", "3", "VINNORM", "1", 
 	"VINTAN", "1", "VINTEX1", "1", "PINTEX0", "1", "PINTEX1", "1", "PINTEX2", "1", 
 	"VSNORM", "1", "VSOBPOS", "1", "PINTEX3", "1", "PINTEX4", "1", "PINTEX5", "1", 
 	"VSTBN", "1","VSLWVPPOS", "1", "PSLIGHTSPOT", "1", "PSSHADOW", "1", 
@@ -268,6 +268,19 @@ SHADERSETDX10 ShaderMenagerDX10::compileShaderSet(SHADERSETDX10::TYPE shaderType
 		&ret.InputLayout);
 	DXASSERT(S_OK != hr);
 	
+	switch(shaderType) {
+		case SHADERSETDX10::SSAO:
+			ret.SamplerState[0] = pointSampler;
+			ret.SamplerState[1] = pointSampler;
+			ret.SamplerState[2] = pointSampler;
+			break;
+		default:
+			ret.SamplerState[0] = linearSampler;
+			ret.SamplerState[1] = linearSampler;
+			ret.SamplerState[2] = linearSampler;
+			break;
+	};
+
 	return ret;
 }
 
@@ -348,12 +361,27 @@ void ShaderMenagerDX10::initShaders() {
 	}
 }
 
-void ShaderMenagerDX10::updateSamplers() {
-	if(activeShader != SHADERSETDX10::SSAO) {
-		pd3dDevice->PSSetSamplers(0, 1, &pointSampler);
-	} else {
-		pd3dDevice->PSSetSamplers(0, 1, &linearSampler);
-	}
+void ShaderMenagerDX10::initSamplers() {
+	D3D10_SAMPLER_DESC sDesc;
+	ZeroMemory(&sDesc, sizeof(D3D10_SAMPLER_DESC));
+	sDesc.Filter = D3D10_FILTER_MIN_MAG_MIP_LINEAR; 
+	sDesc.AddressU = D3D10_TEXTURE_ADDRESS_WRAP;
+	sDesc.AddressV = D3D10_TEXTURE_ADDRESS_WRAP;
+	sDesc.AddressW = D3D10_TEXTURE_ADDRESS_WRAP;
+	sDesc.MinLOD = 0.0f;
+	sDesc.MaxLOD = FLT_MAX;
+	sDesc.MipLODBias = 0.0f;
+	sDesc.MaxAnisotropy = 16;
+	sDesc.ComparisonFunc = D3D10_COMPARISON_NEVER;
+	for(unsigned int i = 0; i < 4; ++i)
+		sDesc.BorderColor[i] = 0.0f;
+
+	defaultSampler = NULL;
+	pd3dDevice->CreateSamplerState(&sDesc, &linearSampler);
+	
+	sDesc.Filter = D3D10_FILTER_MIN_MAG_MIP_POINT;
+	sDesc.MaxAnisotropy = 1;
+	pd3dDevice->CreateSamplerState(&sDesc, &pointSampler);
 }
 
 void ShaderMenagerDX10::updateTextures() {
@@ -420,29 +448,9 @@ void ShaderMenagerDX10::updateSSAOBuffer() {
 }
 
 void ShaderMenagerDX10::init() {
+	initSamplers();
 	initConstantBuffers();
 	initShaders();
-
-	D3D10_SAMPLER_DESC sDesc;
-	ZeroMemory(&sDesc, sizeof(D3D10_SAMPLER_DESC));
-	sDesc.Filter = D3D10_FILTER_ANISOTROPIC; 
-	sDesc.AddressU = D3D10_TEXTURE_ADDRESS_WRAP;
-	sDesc.AddressV = D3D10_TEXTURE_ADDRESS_WRAP;
-	sDesc.AddressW = D3D10_TEXTURE_ADDRESS_WRAP;
-	sDesc.MinLOD = 0.0f;
-	sDesc.MaxLOD = FLT_MAX;
-	sDesc.MipLODBias = 0.0f;
-	sDesc.MaxAnisotropy = 16;
-	sDesc.ComparisonFunc = D3D10_COMPARISON_NEVER;
-	for(unsigned int i = 0; i < 4; ++i)
-		sDesc.BorderColor[i] = 0.0f;
-
-	defaultSampler = NULL;
-	pd3dDevice->CreateSamplerState(&sDesc, &linearSampler);
-	
-	sDesc.Filter = D3D10_FILTER_MIN_MAG_MIP_POINT;
-	sDesc.MaxAnisotropy = 1;
-	pd3dDevice->CreateSamplerState(&sDesc, &pointSampler);
 }
 
 void ShaderMenagerDX10::setCameraPosition(const EVECTOR4& camPos) {
@@ -507,12 +515,13 @@ void ShaderMenagerDX10::onBeginFrame(const SHADERSETDX10::TYPE shaderType) {
 		pd3dDevice->VSSetShader(shaderSets[shaderType].VertexShader);
 		pd3dDevice->GSSetShader(shaderSets[shaderType].GeometryShader);
 		pd3dDevice->PSSetShader(shaderSets[shaderType].PixelShader);
+
+		pd3dDevice->PSSetSamplers(0, SHADERMAXSRV, shaderSets[shaderType].SamplerState);
 	}
 	
 	updateWorldBuffer();
 	updatePostProcessBuffer();
 	updateSSAOBuffer();
-	updateSamplers();
 }
 
 void ShaderMenagerDX10::onRender(const SHADERSETDX10::TYPE shaderType) {

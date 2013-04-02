@@ -15,8 +15,6 @@
 #include <algorithm>
 #include <vector>
 
-#define MAXRENDERBATCHSRV 3
-
 struct CAMERADX10 {
 	D3D10_VIEWPORT ViewPort;
 	EVECTOR4 Position;
@@ -97,7 +95,7 @@ struct RENDERBATCH {
 	ShaderMenagerDX10::LIGHT_DESCREPTION light;
 	EVECTOR4 color;
 	EVECTOR4 camPos;
-	ID3D10ShaderResourceView* srvs[MAXRENDERBATCHSRV];
+	ID3D10ShaderResourceView* srvs[SHADERMAXSRV];
 };
 
 bool operator==(const RENDERBATCH& l, const RENDERBATCH& r);
